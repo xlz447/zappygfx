@@ -14,3 +14,5 @@ examples
 vm_champs
 old
 *pdf
+__*
+*.pyc
