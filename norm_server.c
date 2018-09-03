@@ -6,7 +6,7 @@
 /*   By: zfeng <zfeng@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/31 14:54:00 by zfeng             #+#    #+#             */
-/*   Updated: 2018/09/02 19:55:41 by zfeng            ###   ########.fr       */
+/*   Updated: 2018/09/02 20:01:17 by xzhu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@ void	s_add_to_team(char *team_name, int fd, int nb_client)
 	g_players[fd].team_id = i;
 }
 
-/*
-int		s_get_team_id(char *team_name)
-{
-	int		i;
-
-	i = 0;
-	if (*g_teams[i].team_name)
-		return (0);
-	while (i < MAX_TEAM)
-	{
-		if (strcmp(g_teams[i].team_name, team_name) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-*/
-
 void	s_clear_player(int fd)		// clear the player data when a client is terminated
 {
 	g_players[fd].nb_req = 0;
@@ -74,20 +56,20 @@ void *get_in_addr(struct sockaddr *sa)
 }
 
 int		create_socket(char *port)
-{ 
+{
     int 			listener;
     struct addrinfo hints, *ai, *p;
 	struct protoent	*proto;
 	int				reuse;
 	int				rv;
-	
+
 	proto = getprotobyname("tcp");
 	reuse = 1;
     memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
-    if ((rv = getaddrinfo(NULL, port, &hints, &ai)) != 0) 
+    if ((rv = getaddrinfo(NULL, port, &hints, &ai)) != 0)
 	{
         fprintf(stderr, "selectserver: %s\n", gai_strerror(rv));
         return (EXIT_FAILURE);
@@ -109,7 +91,7 @@ int		create_socket(char *port)
 			continue;
 		}
 		break;
-	}	
+	}
     if (p == NULL)
 	{
         fprintf(stderr, "selectserver: failed to bind\n");
@@ -141,10 +123,10 @@ int		main(int ac, char **av)
     FD_ZERO(&master);    // clear the master and temp sets
     FD_ZERO(&read_fds);
 
-	listener = create_socket(av[1]); 
+	listener = create_socket(av[1]);
 
     // listen
-    if (listen(listener, 42) == -1) 
+    if (listen(listener, 42) == -1)
 	{
         perror("listen");
         exit(3);
@@ -157,9 +139,6 @@ int		main(int ac, char **av)
     fdmax = listener; // so far, it's this one
 
 
-	t_cmdq	*cmdq;
-	cmdq = NULL;
-	
     // main loop
     while (1)
 	{
@@ -200,8 +179,8 @@ int		main(int ac, char **av)
 						printf("x: | y: \n");
 						send(newfd, "joined team", 11, 0);
 						printf("selectserver: new connection from %s on socket %d\n",
-								inet_ntop(remoteaddr.ss_family, 
-									get_in_addr((struct sockaddr*)&remoteaddr), 
+								inet_ntop(remoteaddr.ss_family,
+									get_in_addr((struct sockaddr*)&remoteaddr),
 									remoteIP, INET6_ADDRSTRLEN), newfd);
 					}
 				}
@@ -236,6 +215,6 @@ int		main(int ac, char **av)
 			i++;
 		}
 	}
-    
+
     return (0);
 }

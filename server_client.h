@@ -6,7 +6,7 @@
 /*   By: zfeng <zfeng@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/31 15:16:29 by zfeng             #+#    #+#             */
-/*   Updated: 2018/09/02 12:52:26 by zfeng            ###   ########.fr       */
+/*   Updated: 2018/09/02 20:01:28 by xzhu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include <arpa/inet.h>
 # include <netdb.h>
 # include <errno.h>
-# include "cmd_queue.h"
 
 typedef struct		s_player
 {
