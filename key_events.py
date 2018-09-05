@@ -21,10 +21,10 @@ class KeyEvents:
     def __init__(self, PLAYER):
         self.PLAYER = PLAYER
         self.counter = 0
-        self.movement = .25
+        self.movement = .05
 
     def global_events(self):
-            self.movement = .25
+            self.movement = .05
 
     def quit(self):
         pygame.quit()
