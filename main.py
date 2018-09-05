@@ -27,20 +27,20 @@ while not GAME_OVER:
 			GAME_OVER = True
 
         # MOVE RIGHT
-        if (keys[K_RIGHT]) and PLAYER.PLAYER_POS[0] < MAPWIDTH - 1:
-           key_events.key_right()
+        if (keys[K_RIGHT]):
+           key_events.key_right(PLAYER.PLAYER_POS[0], MAPWIDTH)
 
         # MOVE LEFT
-        if (keys[K_LEFT]) and PLAYER.PLAYER_POS[0] > 0:
-           key_events.key_left()
+        if (keys[K_LEFT]):
+           key_events.key_left(PLAYER.PLAYER_POS[0], MAPWIDTH)
 
         # MOVE UP
-        if (keys[K_UP]) and PLAYER.PLAYER_POS[1] > 0:
-            key_events.key_up()
+        if (keys[K_UP]):
+            key_events.key_up(PLAYER.PLAYER_POS[1], MAPHEIGHT)
 
         # MOVE DOWN
-        if (keys[K_DOWN]) and PLAYER.PLAYER_POS[1] < MAPHEIGHT - 1:
-            key_events.key_down()
+        if (keys[K_DOWN]):
+            key_events.key_down(PLAYER.PLAYER_POS[1], MAPHEIGHT)
 	for row in range(MAPHEIGHT):
 		for column in range(MAPWIDTH):
 			DISPLAYSURFACE.blit(TEXTURES[GRID[row][column]], (column*TILESIZE, row*TILESIZE))
