@@ -17,7 +17,6 @@ key_events = KeyEvents(PLAYER)
 GAME_OVER = False
 
 while not GAME_OVER:
-
 	for event in pygame.event.get():
 
 		keys = pygame.key.get_pressed()
@@ -44,6 +43,9 @@ while not GAME_OVER:
 	for row in range(MAPHEIGHT):
 		for column in range(MAPWIDTH):
 			DISPLAYSURFACE.blit(TEXTURES[GRID[row][column]], (column*TILESIZE, row*TILESIZE))
+			for i in range(0, len(ITEMGRID[row][column])):
+				it_i = ITEMGRID[row][column][i]
+				DISPLAYSURFACE.blit(ITEMS[it_i], (column * TILESIZE + (it_i % 2) * 50, row * TILESIZE + (it_i / 2) * 15))
 	DISPLAYSURFACE.blit(PLAYER.SPRITE_POS, (PLAYER.PLAYER_POS[0]*TILESIZE, PLAYER.PLAYER_POS[1]*TILESIZE))
 
 	pygame.display.update()

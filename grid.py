@@ -9,6 +9,13 @@ GRASSSTONE = 4
 PLASTER = 5
 SOIL = 6
 
+DERAUMERE = 0
+LINEMATE = 1
+MENDIANE = 2
+PHIRAS = 3
+SIBUR = 4
+THYSTAME = 5
+	
 TEXTURES = {
     BRICK: pygame.image.load('./textures/floor/brick.jpg'),
     BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
@@ -19,6 +26,21 @@ TEXTURES = {
 	SOIL: pygame.image.load('./textures/floor/soil.jpg')
 }
 
+ITEMS = {
+	DERAUMERE:
+	pygame.image.load('./textures/item/deraumere.png'),
+	LINEMATE:
+	pygame.image.load('./textures/item/linemate.png'),
+	MENDIANE:
+	pygame.image.load('./textures/item/mendiane.png'),
+	PHIRAS:
+	pygame.image.load('./textures/item/phiras.png'),
+	SIBUR:
+	pygame.image.load('./textures/item/sibur.png'),
+	THYSTAME:
+	pygame.image.load('./textures/item/thystame.png')
+}
+
 GRID = [
     [GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE],
 	[GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE],
@@ -27,6 +49,13 @@ GRID = [
 	[GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE]
 ]
 
+ITEMGRID = [
+    [[0, 1, 2, 5], [], [1, 3, 4, 5], [], [0, 1, 2, 3, 4, 5]],
+	[[], [2, 3, 4, 5], [], [0, 3, 4, 5], []],
+	[[0, 1, 3, 5], [], [0, 2, 3, 5], [], [0, 1, 2, 3, 4, 5]],
+	[[], [1, 3, 4, 5], [], [2, 3, 4, 5], []],
+	[[3, 4, 5], [], [0, 1, 2], [], [0, 1, 2, 4]]
+]
 # GAME DIMENSIONS, CONFIG
 TILESIZE = 100
 MAPWIDTH = 5
