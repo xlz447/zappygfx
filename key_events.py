@@ -24,9 +24,6 @@ class KeyEvents:
         self.movement = .25
 
     def global_events(self):
-        if self.PLAYER.TRANSFORM:
-            self.movement =  .5
-        else:
             self.movement = .25
 
     def quit(self):

@@ -1,4 +1,5 @@
-import pygame
+import pygame, sys
+from pygame.locals import *
 from grid import *
 from key_events import KeyEvents
 
@@ -12,13 +13,11 @@ class LINK:
         self.DIRECTION = False
 
 PLAYER = LINK()
+key_events = KeyEvents(PLAYER)
 GAME_OVER = False
 
-for row in range(MAPHEIGHT):
-	for column in range(MAPWIDTH):
-		DISPLAYSURFACE.blit(TEXTURES[GRID[row][column]], (column*TILESIZE, row*TILESIZE))
-
 while not GAME_OVER:
+
 	for event in pygame.event.get():
 
 		keys = pygame.key.get_pressed()
@@ -42,7 +41,9 @@ while not GAME_OVER:
         # MOVE DOWN
         if (keys[K_DOWN]) and PLAYER.PLAYER_POS[1] < MAPHEIGHT - 1:
             key_events.key_down()
+	for row in range(MAPHEIGHT):
+		for column in range(MAPWIDTH):
+			DISPLAYSURFACE.blit(TEXTURES[GRID[row][column]], (column*TILESIZE, row*TILESIZE))
+	DISPLAYSURFACE.blit(PLAYER.SPRITE_POS, (PLAYER.PLAYER_POS[0]*TILESIZE, PLAYER.PLAYER_POS[1]*TILESIZE))
 
 	pygame.display.update()
-
-	DISPLAYSURFACE.blit(PLAYER.SPRITE_POS, (PLAYER.PLAYER_POS[0]*TILESIZE, PLAYER.PLAYER_POS[1]*TILESIZE))
