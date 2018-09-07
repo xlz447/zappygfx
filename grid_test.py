@@ -34,11 +34,7 @@ class Grid:
 
 		# set up players
 		self.players = []
-		
 
-	def display(self):
-		print("hi")
-		
 new_grid = Grid()
 new_grid.setup(None, 127, [])
 print("Should be 1 1 1 1 1 1 1")
