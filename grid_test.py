@@ -23,4 +23,25 @@ class Grid:
     	Nothing for now
 	"""
 	def setup(self, img, items, players):
+		self.background = img
+		for i in range(6, -1, -1):
+			self.items[i][1] = items % 2
+			items = items / 2
+			
+		# test items
+		for j in range(0, 7):
+			print("Item " + str(j) + " is " + str(self.items[j][1]))
+
+		# set up players
+		self.players = []
 		
+
+	def display(self):
+		print("hi")
+		
+new_grid = Grid()
+new_grid.setup(None, 127, [])
+print("Should be 1 1 1 1 1 1 1")
+
+new_grid.setup(None, 111, [])
+print("Should be 1 1 0 1 1 1 1")
