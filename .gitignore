@@ -4,7 +4,6 @@
 *.h.gch
 *.o
 a.out
-test*
 *.dSYM
 ._*
 *.a
