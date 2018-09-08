@@ -15,7 +15,7 @@ MENDIANE = 2
 PHIRAS = 3
 SIBUR = 4
 THYSTAME = 5
-	
+
 TEXTURES = {
     BRICK: pygame.image.load('./textures/floor/brick.jpg'),
     BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
@@ -28,17 +28,17 @@ TEXTURES = {
 
 ITEMS = {
 	DERAUMERE:
-	pygame.image.load('./textures/item/deraumere.png'),
+	pygame.image.load('./textures/item/deraumere54.png'),
 	LINEMATE:
-	pygame.image.load('./textures/item/linemate.png'),
+	pygame.image.load('./textures/item/linemate54.png'),
 	MENDIANE:
-	pygame.image.load('./textures/item/mendiane.png'),
+	pygame.image.load('./textures/item/mendiane54.png'),
 	PHIRAS:
-	pygame.image.load('./textures/item/phiras.png'),
+	pygame.image.load('./textures/item/phiras54.png'),
 	SIBUR:
-	pygame.image.load('./textures/item/sibur.png'),
+	pygame.image.load('./textures/item/sibur54.png'),
 	THYSTAME:
-	pygame.image.load('./textures/item/thystame.png')
+	pygame.image.load('./textures/item/thystame54.png')
 }
 
 GRID = [
