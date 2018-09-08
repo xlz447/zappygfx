@@ -21,7 +21,7 @@ TEXTURES = {
     BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
     GRASS: pygame.image.load('./textures/floor/grass.jpg'),
     GRASSFLOWER: pygame.image.load('./textures/floor/grassflower.jpg'),
-    GRASSSTONE: pygame.image.load('./textures/floor/grassstone.jpg'),
+    GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
     PLASTER: pygame.image.load('./textures/floor/plaster.jpg'),
 	SOIL: pygame.image.load('./textures/floor/soil.jpg')
 }
