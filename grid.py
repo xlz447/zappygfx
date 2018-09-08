@@ -15,6 +15,7 @@ MENDIANE = 2
 PHIRAS = 3
 SIBUR = 4
 THYSTAME = 5
+FOOD = 6
 
 TEXTURES = {
     BRICK: pygame.image.load('./textures/floor/brick.jpg'),
@@ -38,7 +39,9 @@ ITEMS = {
 	SIBUR:
 	pygame.image.load('./textures/item/sibur54.png'),
 	THYSTAME:
-	pygame.image.load('./textures/item/thystame54.png')
+	pygame.image.load('./textures/item/thystame54.png'),
+	FOOD:
+	pygame.image.load('./textures/item/food54.png'),
 }
 
 GRID = [
