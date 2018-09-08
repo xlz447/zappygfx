@@ -7,13 +7,13 @@ class Grid:
 		self.players = [] #[{x0, y0, image}, {x1, y1, image},......] # might be empty
 		for i in range(0, 6):
 			self.items.append([random.random(), random.random(), 0]) # set up the random xy coordinates and start with no item
-	
-	
+
+
 	"""
 	Funciton to setup a grid
 	Args:
     	img: the background image used for this grid(preloaded using pygames.image.load)
-    	items: an int ranging from 0 to 255 representing the items that will apppear in this grid
+    	items: an int ranging from 0 to 127 representing the items that will apppear in this grid
 		player: data type TBD, (tuple?) contains information of the team and the orientation of all players on the grid
 
 	Returns:
@@ -34,9 +34,9 @@ class Grid:
 		# set up players
 		self.players = []
 
-		
-		
-		
+
+
+
 # this is just for testing
 # TILES
 BRICKMOSS = 0
@@ -59,7 +59,7 @@ TEXTURES = {
     GRASS: pygame.image.load('./textures/floor/grass.jpg'),
 	BRICK: pygame.image.load('./textures/floor/brick.jpg'),
     GRASSFLOWER: pygame.image.load('./textures/floor/grassflower.jpg'),
-    GRASSSTONE: pygame.image.load('./textures/floor/grassstone.jpg'),
+    GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
     PLASTER: pygame.image.load('./textures/floor/plaster.jpg'),
 	SOIL: pygame.image.load('./textures/floor/soil.jpg')
 }
@@ -109,16 +109,16 @@ for row in range(0, NUM_ROW):
 		raise ValueError("Inconsistent column length at row " + str(row))
 	for col in range(0, NUM_COL):
 		new_grid = Grid()
-		new_grid.setup(TEXTURES[SOIL], int(COL_ITEM[col]), [])
+		new_grid.setup(TEXTURES[GRASSSTONE], int(COL_ITEM[col]), [])
 		GRIDS[row].append(new_grid)
-		
+
 GAMEOVER = False
 while GAMEOVER != True:
 	for event in pygame.event.get():
 		keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
 			GAMEOVER = True
-			
+
 	for row in range(NUM_ROW):
 		for column in range(NUM_COL):
 			DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
