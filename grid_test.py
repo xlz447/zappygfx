@@ -90,8 +90,8 @@ ALL_ITEM = test_input.split(",")
 NUM_ROW = int(ALL_ITEM.pop(0))
 NUM_COL = int(ALL_ITEM.pop(0))
 
-# setup pygame, default max win is 500 * 500
-TILESIZE = min([500 / NUM_ROW, 1000 / NUM_COL])
+# setup pygame, default max win is 500 * 500 <---we need to change this
+TILESIZE = min([NUM_ROW * TILESIZE, NUM_COL * TILESIZE])
 ITEMSIZE = 20
 pygame.init()
 pygame.display.set_caption('testing')
