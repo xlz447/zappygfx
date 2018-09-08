@@ -5,7 +5,7 @@ class Grid:
 		self.background = None
 		self.items = [] #[{x0, y0, 0}, {x1, y1,1}, ...., {x6, y6,1}] # will always be length 7
 		self.players = [] #[{x0, y0, image}, {x1, y1, image},......] # might be empty
-		for i in range(0, 6):
+		for i in range(0, 7):
 			self.items.append([random.random(), random.random(), 0]) # set up the random xy coordinates and start with no item
 
 
@@ -24,13 +24,14 @@ class Grid:
 	"""
 	def setup(self, img, items, players):
 		self.background = img
-		for i in range(5, -1, -1):
+		stri = str(items) + " -> "
+		for i in range(6, -1, -1):
 			self.items[i][2] = items % 2
 			items = items / 2
 		# test items
-#		for j in range(0, 7):
-#			print("Item " + str(j) + " is " + str(self.items[j][1]))
-
+		for j in range(0, 7):
+			stri = stri + str(self.items[j][2])
+		print(stri)
 		# set up players
 		self.players = []
 
@@ -53,6 +54,7 @@ MENDIANE = 2
 PHIRAS = 3
 SIBUR = 4
 THYSTAME = 5
+FOOD = 6
 
 TEXTURES = {
     BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
@@ -76,7 +78,9 @@ ITEMS = {
 	SIBUR:
 	pygame.image.load('./textures/item/sibur20.png'),
 	THYSTAME:
-	pygame.image.load('./textures/item/thystame20.png')
+	pygame.image.load('./textures/item/thystame20.png'),
+	FOOD:
+	pygame.image.load('./textures/item/food20.png')
 }
 
 GRIDS = []
@@ -130,7 +134,7 @@ while GAMEOVER != True:
 	for row in range(NUM_ROW):
 		for column in range(NUM_COL):
 			DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
-			for i in range(6):
+			for i in range(7):
 				if GRIDS[row][column].items[i][2] is 1:
 					DISPLAYSURFACE.blit(ITEMS[i], (column*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][0], row*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][1]))
 	pygame.display.update()
