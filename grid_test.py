@@ -103,10 +103,10 @@ for i in TEXTURES:
 for r in range (NUM_ROW):
 	GRIDS.append([])
 	for c in range (NUM_COL):
-			if "#" not in ALL_ITEM[0]:
-				new_grid = Grid()
-				new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
-				GRIDS[r].append(new_grid)
+		if "#" not in ALL_ITEM[0]:
+			new_grid = Grid()
+			new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
+			GRIDS[r].append(new_grid)
 
 
 # setup items
