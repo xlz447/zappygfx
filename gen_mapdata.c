@@ -40,7 +40,7 @@ int		main(int ac, char **av)
 			// printf("%d ", 127);
 			j++;
 		}
-		v = b[0]*pow(2, 6) + b[1]*pow(2, 5) + b[2]*pow(2, 4) + 
+		v = b[0]*pow(2, 6) + b[1]*pow(2, 5) + b[2]*pow(2, 4) +
 			b[3]*pow(2, 3) + b[4]*pow(2, 2) + b[5]*pow(2, 1) + b[6];
 		total += printf("%d,", v);
 		// printf("%d ", v);
@@ -50,6 +50,5 @@ int		main(int ac, char **av)
 	{
 		total+=printf("#");
 	}
-	printf("total:|%i|\n", total);
 	return (0);
 }

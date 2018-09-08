@@ -81,17 +81,17 @@ ITEMS = {
 
 GRIDS = []
 
-# testing message
-FAKEMSG_ITEM = "55,53,23,30,32,20\n" + "53,23,32,10,20,30\n" + "55,53,23,20,30,20\n" + "25,23,22,10,30,5\n" + "5,30,25,3,22,2"
-#FAKEMSG_ITEM = "2,3\n" + "53,23"
-
-FAKEMSG_PLY = ""
-ROW_ITEM = FAKEMSG_ITEM.split("\n")
-NUM_ROW = len(ROW_ITEM)
-NUM_COL = len(ROW_ITEM[0].split(","))
+################################## this part will change to input from server
+f1 = open("testinput.txt", 'r')
+test_input = f1.read()
+f1.close()
+##################################
+ALL_ITEM = test_input.split(",")
+NUM_ROW = int(ALL_ITEM.pop(0))
+NUM_COL = int(ALL_ITEM.pop(0))
 
 # setup pygame, default max win is 500 * 500
-TILESIZE = min([500 / NUM_ROW, 500 / NUM_COL])
+TILESIZE = min([500 / NUM_ROW, 1000 / NUM_COL])
 ITEMSIZE = 20
 pygame.init()
 pygame.display.set_caption('testing')
@@ -100,17 +100,25 @@ DISPLAYSURFACE = pygame.display.set_mode((NUM_COL * TILESIZE, NUM_ROW * TILESIZE
 for i in TEXTURES:
 	pygame.transform.scale(TEXTURES[i], (TILESIZE, TILESIZE))
 
+for r in range (NUM_ROW):
+	GRIDS.append([])
+	for c in range (NUM_COL):
+			if "#" not in ALL_ITEM[0]:
+				new_grid = Grid()
+				new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
+				GRIDS[r].append(new_grid)
+
 
 # setup items
-for row in range(0, NUM_ROW):
-	GRIDS.append([])
-	COL_ITEM = ROW_ITEM[row].split(",")
-	if len(COL_ITEM) != NUM_COL:
-		raise ValueError("Inconsistent column length at row " + str(row))
-	for col in range(0, NUM_COL):
-		new_grid = Grid()
-		new_grid.setup(TEXTURES[GRASSSTONE], int(COL_ITEM[col]), [])
-		GRIDS[row].append(new_grid)
+# for row in range(0, ALL_ITEM):
+# 	GRIDS.append([])
+# 	COL_ITEM = ROW_ITEM[row].split(",")
+# 	if len(COL_ITEM) != NUM_COL:
+# 		raise ValueError("Inconsistent column length at row " + str(row))
+# 	for col in range(0, NUM_COL):
+# 		new_grid = Grid()
+# 		new_grid.setup(TEXTURES[GRASSSTONE], int(COL_ITEM[col]), [])
+# 		GRIDS[row].append(new_grid)
 
 GAMEOVER = False
 while GAMEOVER != True:
