@@ -84,8 +84,6 @@ ITEMS = {
 	pygame.image.load('./textures/item/food20.png')
 }
 
-GRIDS = []
-
 # setup pygame, default max win is 500 * 500 <---we need to change this
 TILESIZE = 100
 ITEMSIZE = 20
@@ -114,7 +112,7 @@ s.connect((TCP_IP, TCP_PORT))
 
 GAMEOVER = False
 while GAMEOVER != True:
-
+	GRIDS = []
 	data = s.recv(BUFFER_SIZE)
 	print (data)
 ##################################
