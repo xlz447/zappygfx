@@ -18,6 +18,7 @@
 # include <sys/select.h>
 
 # define MAP_SIZE 906
+# define PLAYER 33
 
 # define SOCKET_VARS struct addrinfo hints, *ai; struct protoent *proto;
 # define SELECT_VARS fd_set master, read_fds; int fdmax;
@@ -27,4 +28,7 @@ int		perror_rv(char *errmsg);
 void	send_msg(int fd, char *msg);
 void	recv_print(int fd);
 char*		gen(int x, int y);
+void	send_player(int fd, char *msg);
+void	recv_player(int fd);
+
 #endif

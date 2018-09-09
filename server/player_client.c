@@ -44,6 +44,8 @@ int		main(int ac, char **av)
 
 	sock = create_client("127.0.0.1", 4242);
 	recv_print(sock);
+	recv_player(sock);
+	recv_player(sock);
 	close(sock);
 	return (0);
 }
