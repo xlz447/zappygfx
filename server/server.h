@@ -26,5 +26,5 @@
 int		perror_rv(char *errmsg);
 void	send_msg(int fd, char *msg);
 void	recv_print(int fd);
-
+char*		gen(int x, int y);
 #endif

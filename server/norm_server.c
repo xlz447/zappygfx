@@ -122,12 +122,18 @@ int		main(int ac, char **av)
 	if ((newfd = accept(listener, (struct sockaddr *)&remoteaddr, &addrlen)) == -1)
 		perror("accept");
 	// printf("new connection from %s on socket %d\n",
-	// 		inet_ntop(remoteaddr.ss_family, 
-	// 			get_in_addr((struct sockaddr*)&remoteaddr), 
+	// 		inet_ntop(remoteaddr.ss_family,
+	// 			get_in_addr((struct sockaddr*)&remoteaddr),
 	// 			remote_ip, INET6_ADDRSTRLEN), newfd);
-	map = read_map("10x10.map");
+
+	while (1)
+	{
+		map = gen(10,10);
+		send_msg(newfd, map);
+		sleep(1);
+	}
+
 	// printf("%lu\n%s\n", strlen(map), map);
-	send_msg(newfd, map);
+
 	return (0);
 }
-

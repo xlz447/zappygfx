@@ -21,7 +21,7 @@ void	send_msg(int fd, char *msg)
 
 	// printf("server inital msg = |% s|\n", msg);
 	i = 0;
-	while (msg[i])
+	while (msg && msg[i])
 	{
 		buf[i] = msg[i];
 		i++;
@@ -89,9 +89,9 @@ void	recv_print(int fd)
 		if (tbytes >= MAP_SIZE)
 		{
 			msg[MAP_SIZE] = '\0';
-			printf("client unpad msg = |%s|\n", msg);
+			//printf("client unpad msg = |%s|\n", msg);
 			break ;
 		}
 	}
-	
+
 }

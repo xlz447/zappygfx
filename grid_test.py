@@ -1,4 +1,5 @@
 import random, pygame
+import socket
 
 class Grid:
 	def __init__(self):
@@ -24,14 +25,14 @@ class Grid:
 	"""
 	def setup(self, img, items, players):
 		self.background = img
-		stri = str(items) + " -> "
+		#stri = str(items) + " -> "
 		for i in range(6, -1, -1):
 			self.items[i][2] = items % 2
 			items = items / 2
 		# test items
-		for j in range(0, 7):
-			stri = stri + str(self.items[j][2])
-		print(stri)
+		# for j in range(0, 7):
+		# 	stri = stri + str(self.items[j][2])
+		# print(stri)
 		# set up players
 		self.players = []
 
@@ -85,47 +86,53 @@ ITEMS = {
 
 GRIDS = []
 
-################################## this part will change to input from server
-f1 = open("testinput.txt", 'r')
-test_input = f1.read()
-f1.close()
-##################################
-ALL_ITEM = test_input.split(",")
-NUM_ROW = int(ALL_ITEM.pop(0))
-NUM_COL = int(ALL_ITEM.pop(0))
-
 # setup pygame, default max win is 500 * 500 <---we need to change this
-TILESIZE = min([500/NUM_ROW, 1000/NUM_COL])
+TILESIZE = 100
 ITEMSIZE = 20
 pygame.init()
 pygame.display.set_caption('testing')
-DISPLAYSURFACE = pygame.display.set_mode((NUM_COL * TILESIZE, NUM_ROW * TILESIZE))
+DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
 
-for i in TEXTURES:
-	pygame.transform.scale(TEXTURES[i], (TILESIZE, TILESIZE))
+################################## this part will change to input from server
+TCP_IP = '127.0.0.1'
+TCP_PORT = 4242
+BUFFER_SIZE = 906
 
-for r in range (NUM_ROW):
-	GRIDS.append([])
-	for c in range (NUM_COL):
-		if "#" not in ALL_ITEM[0]:
-			new_grid = Grid()
-			new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
-			GRIDS[r].append(new_grid)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((TCP_IP, TCP_PORT))
 
-
-# setup items
-# for row in range(0, ALL_ITEM):
-# 	GRIDS.append([])
-# 	COL_ITEM = ROW_ITEM[row].split(",")
-# 	if len(COL_ITEM) != NUM_COL:
-# 		raise ValueError("Inconsistent column length at row " + str(row))
-# 	for col in range(0, NUM_COL):
-# 		new_grid = Grid()
-# 		new_grid.setup(TEXTURES[GRASSSTONE], int(COL_ITEM[col]), [])
-# 		GRIDS[row].append(new_grid)
+	# setup items
+	# for row in range(0, ALL_ITEM):
+	# 	GRIDS.append([])
+	# 	COL_ITEM = ROW_ITEM[row].split(",")
+	# 	if len(COL_ITEM) != NUM_COL:
+	# 		raise ValueError("Inconsistent column length at row " + str(row))
+	# 	for col in range(0, NUM_COL):
+	# 		new_grid = Grid()
+	# 		new_grid.setup(TEXTURES[GRASSSTONE], int(COL_ITEM[col]), [])
+	# 		GRIDS[row].append(new_grid)
 
 GAMEOVER = False
 while GAMEOVER != True:
+
+	data = s.recv(BUFFER_SIZE)
+	print (data)
+##################################
+	ALL_ITEM = data.split(",")
+	NUM_ROW = int(ALL_ITEM.pop(0))
+	NUM_COL = int(ALL_ITEM.pop(0))
+
+	for i in TEXTURES:
+		pygame.transform.scale(TEXTURES[i], (TILESIZE, TILESIZE))
+
+	for r in range (NUM_ROW):
+		GRIDS.append([])
+		for c in range (NUM_COL):
+			if "#" not in ALL_ITEM[0]:
+				new_grid = Grid()
+				new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
+				GRIDS[r].append(new_grid)
+
 	for event in pygame.event.get():
 		keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:

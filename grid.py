@@ -20,7 +20,7 @@ FOOD = 6
 TEXTURES = {
     BRICK: pygame.image.load('./textures/floor/brick.jpg'),
     BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
-    GRASS: pygame.image.load('./textures/floor/grass.jpg'),
+    GRASS: pygame.image.load('./textures/floor/grass_with_border.jpg'),
     GRASSFLOWER: pygame.image.load('./textures/floor/grassflower.jpg'),
     GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
     PLASTER: pygame.image.load('./textures/floor/plaster.jpg'),
@@ -45,11 +45,11 @@ ITEMS = {
 }
 
 GRID = [
-    [GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE],
-	[GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE],
-	[GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE],
-	[GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE],
-	[GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE, GRASSSTONE]
+    [GRASS, GRASS, GRASS, GRASS, GRASS],
+	[GRASS, GRASS, GRASS, GRASS, GRASS],
+	[GRASS, GRASS, GRASS, GRASS, GRASS],
+	[GRASS, GRASS, GRASS, GRASS, GRASS],
+	[GRASS, GRASS, GRASS, GRASS, GRASS]
 ]
 
 ITEMGRID = [
