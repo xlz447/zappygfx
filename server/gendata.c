@@ -3,13 +3,14 @@
 #include <time.h>
 #include <math.h>
 #include <string.h>
+#include "server.h"
 
 #define MAX_X 15
 #define MAX_Y 15
 #define BUF_SIZE MAX_X*MAX_Y*4+6
 
 // map is in the format:
-// X,Y,1001101(0~127)...,#######
+// X,Y,xxx(0~127)...,#######
 
 static char    *ft_strnew(size_t size)
 {
@@ -59,7 +60,7 @@ char        *ft_itoa(int n)
     return (str);
 }
 
-char*		gen(int x, int y)
+char	*genmap(int x, int y)
 {
 	int		i = 0;
 	int		j;
@@ -67,8 +68,9 @@ char*		gen(int x, int y)
 	char	b[9];
 	int		v;
 	int 	total = 0;
-	char	out[BUF_SIZE+1];
+	char	*out;
 
+	out = (char*)malloc(sizeof(char) * (MAP_SIZE + 1));
 	strcat(out, ft_itoa(x));
 	strcat(out, ",");
 	strcat(out, ft_itoa(y));
@@ -89,7 +91,6 @@ char*		gen(int x, int y)
 			}
 			else
 				continue;
-			// printf("%d ", 127);
 			j++;
 		}
 		v = b[0]*pow(2, 6) + b[1]*pow(2, 5) + b[2]*pow(2, 4) +
@@ -97,14 +98,30 @@ char*		gen(int x, int y)
 		strcat(out, ft_itoa(v));
 		strcat(out, ",");
 		total += printf("%d,", v);
-		// printf("%d ", v);
 		i++;
 	}
-	while (total < BUF_SIZE)
+	while (total < MAP_SIZE)
 	{
 		strcat(out, "#");
 		total+=printf("#");
 	}
 	printf("\n");
 	return (out);
+}
+
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*new;
+
+	if (s1 && s2)
+	{
+		new = ft_strnew(strlen(s1) + strlen(s2));
+		if (!new)
+			return (NULL);
+		strcpy(new, s1);
+		strcat(new, s2);
+		return (new);
+	}
+	return (NULL);
 }

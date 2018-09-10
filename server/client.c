@@ -41,11 +41,15 @@ int		create_client(char *addr, int port)
 int		main(int ac, char **av)
 {
 	int		sock;
+	char	*data;
 
 	sock = create_client("127.0.0.1", 4242);
-	recv_print(sock);
-	recv_player(sock);
-	recv_player(sock);
+
+	while (1)
+	{
+		data = recv_data(sock, 1013);
+		printf("%s\n", data);	
+	}
 	close(sock);
 	return (0);
 }

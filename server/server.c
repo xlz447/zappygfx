@@ -89,44 +89,34 @@ char	*read_map(char *filename)
 {
 	int		fd;
 	char	buf[MAP_SIZE + 1];
-	char	map[MAP_SIZE + 1];
+	char	*map;
 	int		nbytes;
 
+	map = (char*)malloc(sizeof(char) * (MAP_SIZE + 1));
 	if ((fd = open(filename, O_RDONLY)) < 0)
 		perror("open error\n");
  	while ((nbytes = read(fd, buf, MAP_SIZE)) > 0)
  	{
  		buf[nbytes] = '\0';
- 		strncpy(map, buf, nbytes);
+ 		strncat(map, buf, nbytes);
  	}
  	map[MAP_SIZE] = '\0';
- 	// printf("%s", map);
  	return (map);
 }
 
 
-char	*player_data0 =	"\n00,00,03,03,1,02,03,04,05,06,03,99\n"
+char	*player_data0 =	"00,00,03,03,1,02,03,04,05,06,03,99\n"
 						"01,00,04,04,1,02,03,04,05,06,03,99\n"
 						"02,00,05,05,3,02,03,04,05,06,03,99\n";
-char	*player_data1 =	"\n00,00,03,04,3,02,03,04,05,06,03,99\n"
+char	*player_data1 =	"00,00,03,04,3,02,03,04,05,06,03,99\n"
 						"01,00,04,05,1,02,03,04,05,06,03,99\n"
 						"02,00,06,05,3,02,03,04,05,06,03,99\n";
-char	*player_data2 =	"\n00,00,04,04,4,02,03,04,05,06,03,99\n"
+char	*player_data2 =	"00,00,04,04,4,02,03,04,05,06,03,99\n"
 						"01,00,04,06,1,02,03,04,05,06,03,99\n"
 						"02,00,07,05,3,02,03,04,05,06,03,99\n";
-char	*player_data3 =	"\n00,00,04,03,2,02,03,04,05,06,03,99\n"
+char	*player_data3 =	"00,00,04,03,2,02,03,04,05,06,03,99\n"
 						"01,00,04,07,1,02,03,04,05,06,03,99\n"
 						"02,00,08,05,3,02,03,04,05,06,03,99\n";
-// char	*players_data(char *initial)
-// {
-// 	char	final[99];
-// 	int		i = 0;
-
-// 	while (i < 99)
-// 	{
-// 		if ()
-// 	}
-// }
 
 
 int		main(int ac, char **av)
@@ -138,42 +128,46 @@ int		main(int ac, char **av)
 	char					remote_ip[INET6_ADDRSTRLEN];
 	char					*map;
 	static int				move = 0;
+	char					*data;
 
-	SELECT_VARS;
 	listener = s_create_socket();
 	if (listen(listener, 42) == -1)
 		return (EXIT_FAILURE);
 	addrlen = sizeof(remoteaddr);
 	if ((newfd = accept(listener, (struct sockaddr *)&remoteaddr, &addrlen)) == -1)
 		perror("accept");
-	// printf("new connection from %s on socket %d\n",
-	// 		inet_ntop(remoteaddr.ss_family,
-	// 			get_in_addr((struct sockaddr*)&remoteaddr),
-	// 			remote_ip, INET6_ADDRSTRLEN), newfd);
 
 	while (1)
 	{
-		map = gen(10,10);
-		send_msg(newfd, map);
+		map = genmap(10,10);
 		switch (move++ % 4) {
 			case 0:
-				send_player(newfd, player_data0);
+				data = ft_strjoin(map, "\n");
+				data = ft_strjoin(data, player_data0);
+				data = ft_strjoin(data, "@");
+				send_data(newfd, data, strlen(data));
 				break;
 			case 1:
-				send_player(newfd, player_data1);
+				data = ft_strjoin(map, "\n");
+				data = ft_strjoin(data, player_data1);
+				data = ft_strjoin(data, "@");
+				send_data(newfd, data, strlen(data));
 				break;
 			case 2:
-				send_player(newfd, player_data2);
+				data = ft_strjoin(map, "\n");
+				data = ft_strjoin(data, player_data2);
+				data = ft_strjoin(data, "@");
+				send_data(newfd, data, strlen(data));
 				break;
 			case 3:
-				send_player(newfd, player_data3);
+				data = ft_strjoin(map, "\n");
+				data = ft_strjoin(data, player_data3);
+				data = ft_strjoin(data, "@");
+				send_data(newfd, data, strlen(data));
 				break;
 	}
 
 		sleep(1);
 	}
-
-	// printf("%lu\n%s\n", strlen(map), map);
-
 	return (0);
 }

@@ -12,170 +12,80 @@
 
 #include "server.h"
 
-void	send_msg(int fd, char *msg)
+int		send_data(int fd, char *data, int ebytes)
 {
 	int		nbytes;
 	int		tbytes;
-	char	buf[MAP_SIZE];
+	char	*buf;
 	int		i;
 
-	// printf("server inital msg = |% s|\n", msg);
-	i = 0;
-	while (msg && msg[i])
-	{
-		buf[i] = msg[i];
-		i++;
-	}
-	while (i < MAP_SIZE)
-	{
-		buf[i] = '#';
-		i++;
-	}
+	buf = (char*)malloc(sizeof(char) * (ebytes + 1));
+	memset(buf, 0, ebytes + 1);
+	i = -1;
+	while (data && data[++i])
+		buf[i] = data[i];
+	while (i < ebytes)
+		buf[i++] = '#';
 	buf[i] = '\0';
 	tbytes = 0;
-	while (tbytes < MAP_SIZE)
+	while (1)
 	{
-		nbytes = send(fd, buf, MAP_SIZE - tbytes, 0);
-		// nbytes = send(fd, buf, MAP_SIZE, 0);
-		if (nbytes < 0)
+		nbytes = send(fd, buf, ebytes - tbytes, 0);
+		if (nbytes <= 0)
 		{
 			perror("send error\n");
-			return ;
+			free(buf);
+			return (0);
 		}
 		tbytes += nbytes;
-		if (tbytes >= MAP_SIZE)
+		if (tbytes >= ebytes)
 		{
-			// printf("server send msg = |%s|\n", buf);
-			memset(buf, 0, MAP_SIZE);
-			return ;
+			free(buf);
+			return (strlen(data));
 		}
 	}
 }
 
-void	send_player(int fd, char *msg)
+char	*recv_data(int fd, int ebytes)
 {
 	int		nbytes;
 	int		tbytes;
-	char	buf[107];
+	char	*buf;
+	char	*data;
 	int		i;
 
-	// printf("server inital msg = |%s|\n", msg);
-	i = 0;
-	while (msg && msg[i])
-	{
-		buf[i] = msg[i];
-		i++;
-	}
-	while (i < 106)
-	{
-		buf[i] = '#';
-		i++;
-	}
-	buf[i] = '@';
+	buf = (char*)malloc(sizeof(char) * (ebytes + 1));
+	data = (char*)malloc(sizeof(char) * (ebytes + 1));
+	memset(buf , 0, ebytes + 1);
+	memset(data, 0, ebytes + 1);
 	tbytes = 0;
-	while (tbytes < 107)
+	while (1)
 	{
-		nbytes = send(fd, buf, 107 - tbytes, 0);
-		// nbytes = send(fd, buf, MAP_SIZE, 0);
+		nbytes = recv(fd, buf, ebytes - tbytes, 0);
 		if (nbytes < 0)
 		{
-			perror("send error\n");
-			return ;
-		}
-		tbytes += nbytes;
-		if (tbytes >= 107)
-		{
-			// printf("server send msg = |%s|\n", buf);
-			memset(buf, 0, 107);
-			return ;
-		}
-	}
-}
-
-void	recv_print(int fd)
-{
-	int		nbytes;
-	int		tbytes;
-	char	buf[MAP_SIZE + 1];
-	char	msg[MAP_SIZE + 1];
-	int		i;
-
-	tbytes = 0;
-	while (tbytes < MAP_SIZE)
-	{
-		nbytes = recv(fd, buf, MAP_SIZE - tbytes, 0);
-		// nbytes = recv(fd, buf, MAP_SIZE, 0);
-		if (nbytes < 0)
-		{
+			free(buf);
+			free(data);
 			perror("recv error\n");
-			return ;
+			return (NULL);
 		}
 		if (nbytes == 0)
 		{
-			printf("sending done\n");
-			return ;
+			free(buf);
+			free(data);
+			return (NULL);
 		}
 		buf[nbytes] = '\0';
-		printf("client recv msg = |%s|\n", buf);
 		tbytes += nbytes;
-		i = 0;
-		while (i < MAP_SIZE)
+		// i = -1;
+		// while (++i < ebytes && buf[i] != '#')
+		// 	;
+		// buf[i] = '\0';
+		strncat(data, buf, i);
+		if (tbytes >= ebytes)
 		{
-			if (buf[i] == '#')
-				buf[i] = '\0';
-			i++;
-		}
-		strncpy(msg, buf, i);
-		if (tbytes >= MAP_SIZE)
-		{
-			msg[MAP_SIZE] = '\0';
-			//printf("client unpad msg = |%s|\n", msg);
-			break ;
-		}
-	}
-
-}
-
-
-void	recv_player(int fd)
-{
-	int		nbytes;
-	int		tbytes;
-	char	buf[99 + 1];
-	char	msg[99 + 1];
-	int		i;
-
-	tbytes = 0;
-	while (tbytes < 99)
-	{
-		nbytes = recv(fd, buf, 99 - tbytes, 0);
-		// nbytes = recv(fd, buf, MAP_SIZE, 0);
-		if (nbytes < 0)
-		{
-			perror("recv error\n");
-			return ;
-		}
-		if (nbytes == 0)
-		{
-			printf("sending done\n");
-			return ;
-		}
-		buf[nbytes] = '\0';
-		printf("client recv msg = |%s|\n", buf);
-		tbytes += nbytes;
-		i = 0;
-		while (i < 99)
-		{
-			if (buf[i] == '#')
-				buf[i] = '\0';
-			i++;
-		}
-		strncpy(msg, buf, i);
-		if (tbytes >= 99)
-		{
-			msg[99] = '\0';
-			//printf("client unpad msg = |%s|\n", msg);
-			break ;
+			free(buf);
+			return (data);
 		}
 	}
 
