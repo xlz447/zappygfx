@@ -29,7 +29,3 @@ class Grid:
 			items = items / 2
 		# set up players (do we still need this now??)
 		self.players = []
-
-
-
-

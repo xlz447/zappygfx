@@ -21,13 +21,10 @@ THYSTAME = 5
 FOOD = 6
 
 TEXTURES = {
-    BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
-    GRASS: pygame.image.load('./textures/floor/grass.jpg'),
-	BRICK: pygame.image.load('./textures/floor/brick.jpg'),
-    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower.jpg'),
+    GRASS: pygame.image.load('./textures/floor/grass2.jpg'),
+    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower2.jpg'),
     GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
-    PLASTER: pygame.image.load('./textures/floor/plaster.jpg'),
-	SOIL: pygame.image.load('./textures/floor/soil.jpg')
+	SOIL: pygame.image.load('./textures/floor/soil2.jpg')
 }
 
 ITEMS = {
@@ -76,10 +73,10 @@ s.connect((TCP_IP, TCP_PORT))
 GAMEOVER = False
 while GAMEOVER != True:
 	GRIDS = []
-	item_data = s.recv(BUFFER_SIZE)
-	print (item_data)
+	data = s.recv(BUFFER_SIZE)
+	print (data)
 ##################################
-	ALL_ITEM = item_data.split(",")
+	ALL_ITEM = data.split(",")
 	NUM_ROW = int(ALL_ITEM.pop(0))
 	NUM_COL = int(ALL_ITEM.pop(0))
 
@@ -91,7 +88,7 @@ while GAMEOVER != True:
 		for c in range (NUM_COL):
 			if "#" not in ALL_ITEM[0]:
 				new_grid = Grid()
-				new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
+				new_grid.setup(TEXTURES[GRASSFLOWER], int(ALL_ITEM.pop(0)), [])
 				GRIDS[r].append(new_grid)
 
 	for event in pygame.event.get():
