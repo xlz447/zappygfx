@@ -58,13 +58,10 @@ THYSTAME = 5
 FOOD = 6
 
 TEXTURES = {
-    BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
-    GRASS: pygame.image.load('./textures/floor/grass.jpg'),
-	BRICK: pygame.image.load('./textures/floor/brick.jpg'),
-    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower.jpg'),
+    GRASS: pygame.image.load('./textures/floor/grass2.jpg'),
+    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower2.jpg'),
     GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
-    PLASTER: pygame.image.load('./textures/floor/plaster.jpg'),
-	SOIL: pygame.image.load('./textures/floor/soil.jpg')
+	SOIL: pygame.image.load('./textures/floor/soil2.jpg')
 }
 
 ITEMS = {
@@ -128,7 +125,7 @@ while GAMEOVER != True:
 		for c in range (NUM_COL):
 			if "#" not in ALL_ITEM[0]:
 				new_grid = Grid()
-				new_grid.setup(TEXTURES[GRASSSTONE], int(ALL_ITEM.pop(0)), [])
+				new_grid.setup(TEXTURES[GRASSFLOWER], int(ALL_ITEM.pop(0)), [])
 				GRIDS[r].append(new_grid)
 
 	for event in pygame.event.get():

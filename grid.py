@@ -18,13 +18,13 @@ THYSTAME = 5
 FOOD = 6
 
 TEXTURES = {
-    BRICK: pygame.image.load('./textures/floor/brick.jpg'),
-    BRICKMOSS: pygame.image.load('./textures/floor/brickmoss.jpg'),
-    GRASS: pygame.image.load('./textures/floor/grass_with_border.jpg'),
-    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower.jpg'),
+    BRICK: pygame.image.load('./textures/floor/brick2.jpg'),
+    BRICKMOSS: pygame.image.load('./textures/floor/brickmoss2.jpg'),
+    GRASS: pygame.image.load('./textures/floor/grass2.jpg'),
+    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower2.jpg'),
     GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
-    PLASTER: pygame.image.load('./textures/floor/plaster.jpg'),
-	SOIL: pygame.image.load('./textures/floor/soil.jpg')
+    PLASTER: pygame.image.load('./textures/floor/plaster2.jpg'),
+	SOIL: pygame.image.load('./textures/floor/soil2.jpg')
 }
 
 ITEMS = {
