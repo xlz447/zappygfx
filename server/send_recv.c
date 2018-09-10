@@ -56,7 +56,7 @@ void	send_player(int fd, char *msg)
 {
 	int		nbytes;
 	int		tbytes;
-	char	buf[98];
+	char	buf[107];
 	int		i;
 
 	// printf("server inital msg = |%s|\n", msg);
@@ -66,16 +66,16 @@ void	send_player(int fd, char *msg)
 		buf[i] = msg[i];
 		i++;
 	}
-	while (i < 97)
+	while (i < 106)
 	{
 		buf[i] = '#';
 		i++;
 	}
 	buf[i] = '@';
 	tbytes = 0;
-	while (tbytes < 98)
+	while (tbytes < 107)
 	{
-		nbytes = send(fd, buf, 98 - tbytes, 0);
+		nbytes = send(fd, buf, 107 - tbytes, 0);
 		// nbytes = send(fd, buf, MAP_SIZE, 0);
 		if (nbytes < 0)
 		{
@@ -83,10 +83,10 @@ void	send_player(int fd, char *msg)
 			return ;
 		}
 		tbytes += nbytes;
-		if (tbytes >= 98)
+		if (tbytes >= 107)
 		{
 			// printf("server send msg = |%s|\n", buf);
-			memset(buf, 0, 98);
+			memset(buf, 0, 107);
 			return ;
 		}
 	}
