@@ -105,10 +105,18 @@ char	*read_map(char *filename)
 }
 
 
-char	*initial =	"\n00,00,03,03,1,02,03,04,05,06,03,99\n"
-					"01,00,04,04,1,02,03,04,05,06,03,99\n"
-					"02,00,05,05,1,02,03,04,05,06,03,99\n";
-
+char	*player_data0 =	"\n00,00,03,03,1,02,03,04,05,06,03,99\n"
+						"01,00,04,04,1,02,03,04,05,06,03,99\n"
+						"02,00,05,05,3,02,03,04,05,06,03,99\n";
+char	*player_data1 =	"\n00,00,03,04,3,02,03,04,05,06,03,99\n"
+						"01,00,04,05,1,02,03,04,05,06,03,99\n"
+						"02,00,06,05,3,02,03,04,05,06,03,99\n";
+char	*player_data2 =	"\n00,00,04,04,4,02,03,04,05,06,03,99\n"
+						"01,00,04,06,1,02,03,04,05,06,03,99\n"
+						"02,00,07,05,3,02,03,04,05,06,03,99\n";
+char	*player_data3 =	"\n00,00,04,03,2,02,03,04,05,06,03,99\n"
+						"01,00,04,07,1,02,03,04,05,06,03,99\n"
+						"02,00,08,05,3,02,03,04,05,06,03,99\n";
 // char	*players_data(char *initial)
 // {
 // 	char	final[99];
@@ -129,6 +137,7 @@ int		main(int ac, char **av)
 	struct sockaddr_storage	remoteaddr;
 	char					remote_ip[INET6_ADDRSTRLEN];
 	char					*map;
+	static int				move = 0;
 
 	SELECT_VARS;
 	listener = s_create_socket();
@@ -146,7 +155,21 @@ int		main(int ac, char **av)
 	{
 		map = gen(10,10);
 		send_msg(newfd, map);
-		send_player(newfd, initial);
+		switch (move++ % 4) {
+			case 0:
+				send_player(newfd, player_data0);
+				break;
+			case 1:
+				send_player(newfd, player_data1);
+				break;
+			case 2:
+				send_player(newfd, player_data2);
+				break;
+			case 3:
+				send_player(newfd, player_data3);
+				break;
+	}
+
 		sleep(1);
 	}
 
