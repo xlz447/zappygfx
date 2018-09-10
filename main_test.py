@@ -82,7 +82,7 @@ while GAMEOVER != True:
 		GET_FULL_DATA = sep in data.split("\n")
 #	while (data == "" or data[len(data) - 2] == '#'): 
 #		data += s.recv(BUFFER_SIZE) + "\n" # temporary version due to flawed input
-	print (data)
+#	print (data)
 ##################################
 	data_split = data.split("\n")
 	ALL_ITEM = data_split[0].split(",")

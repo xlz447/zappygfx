@@ -36,12 +36,30 @@ class Player:
 	"""
 	def setup(self, player_data):
 		info = player_data.split(",")
+		
+		print("Get info: ")
+		print(info)
+		
 		self.id = int(info[0])
+		
+		print("Created player " + str(self.id))
+		
 		self.team = int(info[1])
-		self.img = IMAGE[self.team]
-		for i in range(3):
-			self.coor[i] = int(info[i + 2])
-	
+		
+		print(" at team " + str(self.team))
+		
+		for cor in range(3):
+			self.coor[cor] = int(info[cor + 2])
+			
+		print(" at coor (" + str(self.coor[0]) + ", " + str(self.coor[1]) + ")")
+		print(" facing " + str(self.coor[2]))
+		
+		self.img = IMAGE[self.team][self.coor[2]]
+		for item in range(7):
+			self.items[item] = int(info[item + 5])
+			
+		print("owning these items: ")
+		print(self.items)
 	
 	"""
 	Function to update a player, updates the player's info to new info(will have to cooperate with the graphics for moving and so on)
