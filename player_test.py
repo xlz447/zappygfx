@@ -1,16 +1,19 @@
 import random
 
-class Grid:
-	def __init__(self):
-		self.background = None
-		self.items = [] #[{x0, y0, 0}, {x1, y1,1}, ...., {x6, y6,1}] # will always be length 7
-		self.players = [] #[{x0, y0, image}, {x1, y1, image},......] # might be empty
+
+# player_id,team_id,x,y,orientation,linemate,deraumere,sibur,mendiane,phiras,thystame,food
+class Player:
+	def __init__(self, playerid, teamid, x,y,orientation,linemate,deraumere,sibur,mendiane,phiras,thystame,food):
+		self.id = playerid
+		self.items = [] #array of int # will always be length 7
+		self.coor = [0, 0]
+		
 		for i in range(0, 7):
 			self.items.append([random.random(), random.random(), 0]) # set up the random xy coordinates and start with no item
 
 
 	"""
-	Funciton to setup a grid
+	Funciton to change a grid
 	Args:
     	img: the background image used for this grid(preloaded using pygames.image.load)
     	items: an int ranging from 0 to 127 representing the items that will apppear in this grid
