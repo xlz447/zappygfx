@@ -71,9 +71,9 @@ void	send_player(int fd, char *msg)
 		buf[i] = '#';
 		i++;
 	}
-	// buf[i] = '\0';
+	buf[i] = '\0';
 	tbytes = 0;
-	while (1)
+	while (tbytes < 96)
 	{
 		nbytes = send(fd, buf, 96 - tbytes, 0);
 		// nbytes = send(fd, buf, MAP_SIZE, 0);

@@ -51,10 +51,11 @@ pygame.init()
 pygame.display.set_caption('testing')
 DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
 
-################################## this part will change to input from server
+
 TCP_IP = '127.0.0.1'
 TCP_PORT = 4242
-BUFFER_SIZE = 906 + 96
+BUFFER_SIZE1 = 906 #map
+BUFFER_SIZE2 = 96  #player  -> seperate because in norm_server.c it sends twice
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
@@ -73,10 +74,12 @@ s.connect((TCP_IP, TCP_PORT))
 GAMEOVER = False
 while GAMEOVER != True:
 	GRIDS = []
-	data = s.recv(BUFFER_SIZE)
-	print (data)
+	mapdata = s.recv(BUFFER_SIZE1)
+	playerdata = s.recv(BUFFER_SIZE2)
+	print (mapdata)
+	print (playerdata)
 ##################################
-	ALL_ITEM = data.split(",")
+	ALL_ITEM = mapdata.split(",")
 	NUM_ROW = int(ALL_ITEM.pop(0))
 	NUM_COL = int(ALL_ITEM.pop(0))
 
