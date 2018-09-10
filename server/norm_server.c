@@ -109,10 +109,6 @@ char	*initial =	"00,00,03,03,1,02,03,04,05,06,03\n"
 					"01,00,04,04,1,02,03,04,05,06,03\n"
 					"02,00,05,05,1,02,03,04,05,06,03\n";
 
-char	*final =	"05,00,04,03,1,02,03,04,05,06,03\n"
-					"06,00,05,04,1,02,03,04,05,06,03\n"
-					"07,00,06,05,1,02,03,04,05,06,03\n";
-
 // char	*players_data(char *initial)
 // {
 // 	char	final[99];
@@ -152,7 +148,6 @@ int		main(int ac, char **av)
 		send_msg(newfd, map);
 		send_player(newfd, initial);
 		sleep(1);
-		send_player(newfd, final);
 	}
 
 	// printf("%lu\n%s\n", strlen(map), map);

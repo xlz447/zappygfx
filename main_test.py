@@ -1,6 +1,6 @@
 import socket, pygame
-from grid_test import * 
-from player_test import * 
+from grid_test import *
+from player_test import *
 
 # this is just for testing
 # TILES
@@ -54,7 +54,7 @@ DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
 ################################## this part will change to input from server
 TCP_IP = '127.0.0.1'
 TCP_PORT = 4242
-BUFFER_SIZE = 906
+BUFFER_SIZE = 906 + 96
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
