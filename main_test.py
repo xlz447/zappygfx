@@ -77,12 +77,12 @@ while GAMEOVER != True:
 	GET_FULL_DATA = False
 	sep = "@"
 	# to make sure we have the full data to run
-#	while not GET_FULL_DATA:
-#		data += s.recv(BUFFER_SIZE)
-#		GET_FULL_DATA = sep in data.split("\n")
-	while (data == "" or data[len(data) - 2] == '#'): 
-		data += s.recv(BUFFER_SIZE) + "\n" # temporary version due to flawed input
-#	print (data)
+	while not GET_FULL_DATA:
+		data += s.recv(BUFFER_SIZE)
+		GET_FULL_DATA = sep in data.split("\n")
+#	while (data == "" or data[len(data) - 2] == '#'): 
+#		data += s.recv(BUFFER_SIZE) + "\n" # temporary version due to flawed input
+	print (data)
 ##################################
 	data_split = data.split("\n")
 	ALL_ITEM = data_split[0].split(",")
@@ -104,7 +104,7 @@ while GAMEOVER != True:
 
 	# setting up players
 	for i in range(1, len(data_split)):
-		if not data_split[i] == '':
+		if not (data_split[i] == '' or data_split[i] == '@'):
 			new_player = Player()
 			new_player.setup(data_split[i])
 			if not(new_player.id < 0 or new_player.id in ALL_PLAYER):

@@ -1,4 +1,4 @@
-import random
+import random, pygame
 
 TEAM0 = 0
 TEAM1 = 1
@@ -40,7 +40,7 @@ class Player:
 		self.team = int(info[1])
 		self.img = IMAGE[self.team]
 		for i in range(3):
-		self.coor[i] = int(info[i + 2])
+			self.coor[i] = int(info[i + 2])
 	
 	
 	"""
