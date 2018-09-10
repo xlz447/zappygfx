@@ -23,4 +23,4 @@ class Player:
 	"""
 	def setup(self, player_data):
 		info = player_data.split(",")
-		self.id = 
+		self.id = int(info[0])
