@@ -72,17 +72,17 @@ s.connect((TCP_IP, TCP_PORT))
 GAMEOVER = False
 while GAMEOVER != True:
 	GRIDS = []
-	PLAYERS = {}
+	ALL_PLAYER = {}
 	data = ""
 	GET_FULL_DATA = False
-	sep = "$"
+	sep = "@"
 	# to make sure we have the full data to run
 #	while not GET_FULL_DATA:
 #		data += s.recv(BUFFER_SIZE)
 #		GET_FULL_DATA = sep in data.split("\n")
-	while (data == "" or data[len(data) - 2] == '#'):
-		data += s.recv(BUFFER_SIZE) + "\n"
-	print (data)
+	while (data == "" or data[len(data) - 2] == '#'): 
+		data += s.recv(BUFFER_SIZE) + "\n" # temporary version due to flawed input
+#	print (data)
 ##################################
 	data_split = data.split("\n")
 	ALL_ITEM = data_split[0].split(",")
@@ -103,9 +103,14 @@ while GAMEOVER != True:
 				GRIDS[r].append(new_grid)
 
 	# setting up players
-#	for i in range(1, len(data_split)):
-		
-		
+	for i in range(1, len(data_split)):
+		if not data_split[i] == '':
+			new_player = Player()
+			new_player.setup(data_split[i])
+			if not(new_player.id < 0 or new_player.id in ALL_PLAYER):
+				ALL_PLAYER[new_player.id] = new_player
+#				print("Player " + str(new_player.id) + " created")
+
 	
 	for event in pygame.event.get():
 		keys = pygame.key.get_pressed()
@@ -118,4 +123,7 @@ while GAMEOVER != True:
 			for i in range(7):
 				if GRIDS[row][column].items[i][2] is 1:
 					DISPLAYSURFACE.blit(ITEMS[i], (column*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][0], row*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][1]))
+					
+	for players in ALL_PLAYER:
+		print("display player " + str(ALL_PLAYER[players].id))
 	pygame.display.update()
