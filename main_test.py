@@ -2,7 +2,6 @@ import socket, pygame
 from grid_test import * 
 from player_test import * 
 
-# this is just for testing
 # TILES
 BRICKMOSS = 0
 GRASS = 1
@@ -73,16 +72,30 @@ s.connect((TCP_IP, TCP_PORT))
 GAMEOVER = False
 while GAMEOVER != True:
 	GRIDS = []
-	data = s.recv(BUFFER_SIZE)
-	print (data)
+	PLAYERS = {}
+	data = ""
+	GET_FULL_DATA = False
+	sep = "###"
+	cnt = 0 # to fit in error in server now...
+	# to make sure we have the full data to run
+	while not GET_FULL_DATA:
+		data += s.recv(BUFFER_SIZE)
+		if sep in data.split("\n"):
+			cnt += 1
+#		GET_FULL_DATA = sep in data.split("\n") # to fit in error in server now...
+		GET_FULL_DATA = cnt < 2 # to fit in error in server now...
+#	print (data)
 ##################################
-	ALL_ITEM = data.split(",")
+	data_split = data.split("\n")
+	ALL_ITEM = data_split[0].split(",")
+#	print (data_split)
 	NUM_ROW = int(ALL_ITEM.pop(0))
 	NUM_COL = int(ALL_ITEM.pop(0))
 
 	for i in TEXTURES:
 		pygame.transform.scale(TEXTURES[i], (TILESIZE, TILESIZE))
 
+	# setting up grids
 	for r in range (NUM_ROW):
 		GRIDS.append([])
 		for c in range (NUM_COL):
@@ -91,6 +104,11 @@ while GAMEOVER != True:
 				new_grid.setup(TEXTURES[GRASSFLOWER], int(ALL_ITEM.pop(0)), [])
 				GRIDS[r].append(new_grid)
 
+	# setting up players
+	for i in range(1, len(data_split)):
+		
+		
+	
 	for event in pygame.event.get():
 		keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
