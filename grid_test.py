@@ -4,7 +4,7 @@ class Grid:
 	def __init__(self):
 		self.background = None
 		self.items = [] #[{x0, y0, 0}, {x1, y1,1}, ...., {x6, y6,1}] # will always be length 7
-		self.players = [] #[{x0, y0, image}, {x1, y1, image},......] # might be empty
+		self.players = [] #[x0, y0, image], [x1, y1, image],......] # might be empty
 		for i in range(0, 7):
 			self.items.append([random.random(), random.random(), 0]) # set up the random xy coordinates and start with no item
 
@@ -29,3 +29,28 @@ class Grid:
 			items = items / 2
 		# set up players (do we still need this now??)
 		self.players = []
+
+	"""
+	Funciton to add a player
+	Args:
+    	img: the image used for this player(preloaded using pygames.image.load)
+    	
+	Returns:
+    	None
+
+	Raises:
+    	Nothing for now
+	"""
+	def addplayer(self, img):
+		repeated = True
+		while repeated:
+			repeated = False
+			x = random.random()
+			y = random.random()
+			for it in self.items:
+				if it[2] == 1 and it[0] - x < 0.05 and it[1] - y < 0.05:
+					repeated = True
+			for pl in self.players:
+				if pl[0] - x < 0.05 and pl[1] - y < 0.05:
+					repeated = True
+		self.players.append([x, y, img])

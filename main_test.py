@@ -46,6 +46,7 @@ ITEMS = {
 # setup pygame, default max win is 500 * 500 <---we need to change this
 TILESIZE = 100
 ITEMSIZE = 20
+PLAYERSIZE = 50
 pygame.init()
 pygame.display.set_caption('testing')
 DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
@@ -109,6 +110,7 @@ while GAMEOVER != True:
 			new_player.setup(data_split[i])
 			if not(new_player.id < 0 or new_player.id in ALL_PLAYER):
 				ALL_PLAYER[new_player.id] = new_player
+				GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player.img)
 #				print("Player " + str(new_player.id) + " created")
 
 	
@@ -123,7 +125,6 @@ while GAMEOVER != True:
 			for i in range(7):
 				if GRIDS[row][column].items[i][2] is 1:
 					DISPLAYSURFACE.blit(ITEMS[i], (column*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][0], row*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][1]))
-					
-	for players in ALL_PLAYER:
-		print("display player " + str(ALL_PLAYER[players].id))
+			for p in range(len(GRIDS[row][column].players)):
+				DISPLAYSURFACE.blit(GRIDS[row][column].players[p][2], (column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0], row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1]))
 	pygame.display.update()
