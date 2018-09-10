@@ -42,15 +42,17 @@ class Grid:
     	Nothing for now
 	"""
 	def addplayer(self, img):
-		repeated = True
-		while repeated:
-			repeated = False
-			x = random.random()
-			y = random.random()
-			for it in self.items:
-				if it[2] == 1 and it[0] - x < 0.05 and it[1] - y < 0.05:
-					repeated = True
-			for pl in self.players:
-				if pl[0] - x < 0.05 and pl[1] - y < 0.05:
-					repeated = True
+#		repeated = True
+#		while repeated:
+#			repeated = False
+#			x = random.random()
+#			y = random.random()
+#			for it in self.items:
+#				if it[2] == 1 and it[0] - x < 0.05 and it[1] - y < 0.05:
+#					repeated = True
+#			for pl in self.players:
+#				if pl[0] - x < 0.05 and pl[1] - y < 0.05:
+#					repeated = True
+		x = 0.5
+		y = 0.5
 		self.players.append([x, y, img])
