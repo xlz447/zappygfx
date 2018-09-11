@@ -19,34 +19,41 @@ SIBUR = 4
 THYSTAME = 5
 FOOD = 6
 
+TILESIZE = 120
+ITEMSIZE = 20
+PLAYERSIZE = 80
+
 TEXTURES = {
-    GRASS: pygame.image.load('./textures/floor/grass2.jpg'),
-    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower2.jpg'),
-    GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
-	SOIL: pygame.image.load('./textures/floor/soil2.jpg')
+    GRASS:
+	pygame.transform.scale(pygame.image.load('./textures/floor/grass2.jpg'), (TILESIZE, TILESIZE)),
+    GRASSFLOWER:
+	pygame.transform.scale(pygame.image.load('./textures/floor/grassflower2.jpg'), (TILESIZE, TILESIZE)),
+    GRASSSTONE:
+	pygame.transform.scale(pygame.image.load('./textures/floor/grassstone2.jpg'), (TILESIZE, TILESIZE)),
+	SOIL:
+	pygame.transform.scale(pygame.image.load('./textures/floor/soil2.jpg'), (TILESIZE, TILESIZE))
 }
 
 ITEMS = {
 	DERAUMERE:
-	pygame.image.load('./textures/item/deraumere20.png'),
+	pygame.transform.scale(pygame.image.load('./textures/item/deraumere54.png'), (ITEMSIZE, ITEMSIZE)),
 	LINEMATE:
-	pygame.image.load('./textures/item/linemate20.png'),
+	pygame.transform.scale(pygame.image.load('./textures/item/linemate54.png'), (ITEMSIZE, ITEMSIZE)),
 	MENDIANE:
-	pygame.image.load('./textures/item/mendiane20.png'),
+	pygame.transform.scale(pygame.image.load('./textures/item/mendiane54.png'), (ITEMSIZE, ITEMSIZE)),
 	PHIRAS:
-	pygame.image.load('./textures/item/phiras20.png'),
+	pygame.transform.scale(pygame.image.load('./textures/item/phiras54.png'), (ITEMSIZE, ITEMSIZE)),
 	SIBUR:
-	pygame.image.load('./textures/item/sibur20.png'),
+	pygame.transform.scale(pygame.image.load('./textures/item/sibur54.png'), (ITEMSIZE, ITEMSIZE)),
 	THYSTAME:
-	pygame.image.load('./textures/item/thystame20.png'),
+	pygame.transform.scale(pygame.image.load('./textures/item/thystame54.png'), (ITEMSIZE, ITEMSIZE)),
 	FOOD:
-	pygame.image.load('./textures/item/food20.png')
+	pygame.transform.scale(pygame.image.load('./textures/item/food.png'), (ITEMSIZE, ITEMSIZE))
+
 }
 
 # setup pygame, default max win is 500 * 500 <---we need to change this
-TILESIZE = 100
-ITEMSIZE = 20
-PLAYERSIZE = 50
+
 pygame.init()
 pygame.display.set_caption('testing')
 DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
@@ -81,7 +88,7 @@ while GAMEOVER != True:
 	while not GET_FULL_DATA:
 		data += s.recv(BUFFER_SIZE)
 		GET_FULL_DATA = sep in data.split("\n")
-#	while (data == "" or data[len(data) - 2] == '#'): 
+#	while (data == "" or data[len(data) - 2] == '#'):
 #		data += s.recv(BUFFER_SIZE) + "\n" # temporary version due to flawed input
 #	print (data)
 ##################################
@@ -113,7 +120,7 @@ while GAMEOVER != True:
 				GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player.img)
 #				print("Player " + str(new_player.id) + " created")
 
-	
+
 	for event in pygame.event.get():
 		keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:

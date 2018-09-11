@@ -4,13 +4,17 @@ TEAM0 = 0
 TEAM1 = 1
 TEAM2 = 2
 TEAM3 = 3
+TEAM4 = 4
+TEAM5 = 5
 
 # 0 for b; 1 for f; 2 for l; 3 for r
 IMAGE = {
-    TEAM0: [pygame.image.load('./sprites/link0/link_f0.png'), pygame.image.load('./sprites/link0/link_l0.png'), pygame.image.load('./sprites/link0/link_r0.png'), pygame.image.load('./sprites/link0/link_b0.png')],
-    TEAM1: [pygame.image.load('./sprites/link1/link_f0.png'), pygame.image.load('./sprites/link1/link_l0.png'), pygame.image.load('./sprites/link1/link_r0.png'), pygame.image.load('./sprites/link1/link_b0.png')],
-    TEAM2: [pygame.image.load('./sprites/link2/link_f0.png'), pygame.image.load('./sprites/link2/link_l0.png'), pygame.image.load('./sprites/link2/link_r0.png'), pygame.image.load('./sprites/link2/link_b0.png')],
-	TEAM3: [pygame.image.load('./sprites/link3/link_f0.png'), pygame.image.load('./sprites/link3/link_l0.png'), pygame.image.load('./sprites/link3/link_r0.png'), pygame.image.load('./sprites/link3/link_b0.png')]
+    TEAM0: [pygame.image.load('./sprites/team0/t0_f0.png'), pygame.image.load('./sprites/team0/t0_l0.png'), pygame.image.load('./sprites/team0/t0_r0.png'), pygame.image.load('./sprites/team0/t0_b0.png')],
+    TEAM1: [pygame.image.load('./sprites/team1/t1_f0.png'), pygame.image.load('./sprites/team1/t1_l0.png'), pygame.image.load('./sprites/team1/t1_r0.png'), pygame.image.load('./sprites/team1/t1_b0.png')],
+    TEAM2: [pygame.image.load('./sprites/team2/t2_f0.png'), pygame.image.load('./sprites/team2/t2_l0.png'), pygame.image.load('./sprites/team2/t2_r0.png'), pygame.image.load('./sprites/team2/t2_b0.png')],
+	TEAM3: [pygame.image.load('./sprites/team3/t3_f0.png'), pygame.image.load('./sprites/team3/t3_l0.png'), pygame.image.load('./sprites/team3/t3_r0.png'), pygame.image.load('./sprites/team3/t3_b0.png')],
+	TEAM4: [pygame.image.load('./sprites/team4/t4_f0.png'), pygame.image.load('./sprites/team4/t4_l0.png'), pygame.image.load('./sprites/team4/t4_r0.png'), pygame.image.load('./sprites/team4/t4_b0.png')],
+	TEAM5: [pygame.image.load('./sprites/team5/t5_f0.png'), pygame.image.load('./sprites/team5/t5_l0.png'), pygame.image.load('./sprites/team5/t5_r0.png'), pygame.image.load('./sprites/team5/t5_b0.png')],
 }
 
 class Player:
