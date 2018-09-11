@@ -23,17 +23,6 @@ TILESIZE = 120
 ITEMSIZE = 20
 PLAYERSIZE = 80
 
-# IMAGES FOR LINK ANIMATED WALKING
-img_path = './sprites/team0/t0_'
-f_path = img_path + 'f'
-b_path = img_path + 'b'
-r_path = img_path + 'r'
-l_path =  img_path + 'l'
-f_images = [f_path+str(f)+'.png' for f in range(3)]
-b_images = [b_path+str(b)+'.png' for b in range(3)]
-r_images = [r_path+str(r)+'.png' for r in range(3)]
-l_images = [l_path+str(l)+'.png' for l in range(3)]
-
 TEXTURES = {
     GRASS:
 	pygame.transform.scale(pygame.image.load('./textures/floor/grass2.jpg'), (TILESIZE, TILESIZE)),

@@ -1,4 +1,5 @@
 import random, pygame
+import pprint
 
 TEAM0 = 0
 TEAM1 = 1
@@ -6,6 +7,16 @@ TEAM2 = 2
 TEAM3 = 3
 TEAM4 = 4
 TEAM5 = 5
+
+# IMAGES FOR ANIMATED WALKING
+
+IMAGEPATH = [[[0 for k in xrange(4)] for j in xrange(4)] for i in xrange(6)]
+for i in range(6):
+	IMAGEPATH[i][0] = ['./sprites/team'+str(i)+'/t'+str(i)+'_f'+str(f)+'.png' for f in range(4)]
+	IMAGEPATH[i][1] = ['./sprites/team'+str(i)+'/t'+str(i)+'_l'+str(f)+'.png' for f in range(4)]
+	IMAGEPATH[i][2] = ['./sprites/team'+str(i)+'/t'+str(i)+'_r'+str(f)+'.png' for f in range(4)]
+	IMAGEPATH[i][3] = ['./sprites/team'+str(i)+'/t'+str(i)+'_b'+str(f)+'.png' for f in range(4)]
+pprint.pprint(IMAGEPATH)
 
 # 0 for f; 1 for l; 2 for r; 3 for b
 IMAGE = {
