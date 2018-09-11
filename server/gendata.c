@@ -75,7 +75,7 @@ char	*genmap(int x, int y)
 	strcat(out, ",");
 	strcat(out, ft_itoa(y));
 	strcat(out, ",");
-	total += printf("%d,%d,", x, y);
+	//total += printf("%d,%d,", x, y);
 	srand(time(NULL));
 	while (i < x * y)
 	{
@@ -97,13 +97,13 @@ char	*genmap(int x, int y)
 			b[3]*pow(2, 3) + b[4]*pow(2, 2) + b[5]*pow(2, 1) + b[6];
 		strcat(out, ft_itoa(v));
 		strcat(out, ",");
-		total += printf("%d,", v);
+		//total += printf("%d,", v);
 		i++;
 	}
-	while (total < MAP_SIZE)
+	while (strlen(out) < MAP_SIZE)
 	{
 		strcat(out, "#");
-		total+=printf("#");
+		//total+=printf("#");
 	}
 	printf("\n");
 	return (out);

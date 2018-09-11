@@ -107,16 +107,16 @@ char	*read_map(char *filename)
 
 char	*player_data0 =	"00,00,03,03,1,02,03,04,05,06,03,99\n"
 						"01,01,04,04,1,02,03,04,05,06,03,99\n"
-						"02,02,05,05,3,02,03,04,05,06,03,99\n";
-char	*player_data1 =	"00,00,03,04,3,02,03,04,05,06,03,99\n"
-						"01,01,04,05,1,02,03,04,05,06,03,99\n";
-char	*player_data2 =	"00,00,04,04,4,02,03,04,05,06,03,99\n"
+						"02,02,06,06,1,02,03,04,05,06,03,99\n";
+char	*player_data1 =	"00,00,03,04,1,02,03,04,05,06,03,99\n"
+						"01,01,07,06,1,02,03,04,05,06,03,99\n"
+						"02,02,05,05,1,02,03,04,05,06,03,99\n";
+char	*player_data2 =	"00,00,04,04,1,02,03,04,05,06,03,99\n"
 						"01,01,04,06,1,02,03,04,05,06,03,99\n"
-						"02,02,07,05,3,02,03,04,05,06,03,99\n";
-char	*player_data3 =	"00,00,04,03,2,02,03,04,05,06,03,99\n"
+						"02,02,08,06,1,02,03,04,05,06,03,99\n";
+char	*player_data3 =	"00,00,04,03,1,02,03,04,05,06,03,99\n"
 						"01,01,04,07,1,02,03,04,05,06,03,99\n"
-						"02,02,08,05,3,02,03,04,05,06,03,99\n"
-						"03,03,09,09,1,02,03,04,05,06,03,99\n";
+						"02,02,09,06,1,02,03,04,05,06,03,99\n";
 
 
 int		main(int ac, char **av)
@@ -145,28 +145,32 @@ int		main(int ac, char **av)
 				data = ft_strjoin(map, "\n");
 				data = ft_strjoin(data, player_data0);
 				data = ft_strjoin(data, "@");
+				data = ft_strjoin(data, "\n");
 				send_data(newfd, data, strlen(data));
 				break;
 			case 1:
 				data = ft_strjoin(map, "\n");
 				data = ft_strjoin(data, player_data1);
 				data = ft_strjoin(data, "@");
+				data = ft_strjoin(data, "\n");
 				send_data(newfd, data, strlen(data));
 				break;
 			case 2:
 				data = ft_strjoin(map, "\n");
 				data = ft_strjoin(data, player_data2);
 				data = ft_strjoin(data, "@");
+				data = ft_strjoin(data, "\n");
 				send_data(newfd, data, strlen(data));
 				break;
 			case 3:
 				data = ft_strjoin(map, "\n");
 				data = ft_strjoin(data, player_data3);
 				data = ft_strjoin(data, "@");
+				data = ft_strjoin(data, "\n");
 				send_data(newfd, data, strlen(data));
 				break;
 	}
-
+		printf("\nData sent:|%s|\n", data);
 		sleep(1);
 	}
 	return (0);

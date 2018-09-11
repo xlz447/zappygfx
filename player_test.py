@@ -7,7 +7,7 @@ TEAM3 = 3
 TEAM4 = 4
 TEAM5 = 5
 
-# 0 for b; 1 for f; 2 for l; 3 for r
+# 0 for f; 1 for l; 2 for r; 3 for b
 IMAGE = {
     TEAM0: [pygame.image.load('./sprites/team0/t0_f0.png'), pygame.image.load('./sprites/team0/t0_l0.png'), pygame.image.load('./sprites/team0/t0_r0.png'), pygame.image.load('./sprites/team0/t0_b0.png')],
     TEAM1: [pygame.image.load('./sprites/team1/t1_f0.png'), pygame.image.load('./sprites/team1/t1_l0.png'), pygame.image.load('./sprites/team1/t1_r0.png'), pygame.image.load('./sprites/team1/t1_b0.png')],
@@ -24,6 +24,8 @@ class Player:
 		self.img = None
 		self.coor = [0, 0, 0] # x,y coordinate and orientation
 		self.items = [0, 0, 0, 0, 0, 0, 0] #array of int, will always be length 7
+		self.movespeed = 0.25
+		self.counter = 0
 
 
 	"""
