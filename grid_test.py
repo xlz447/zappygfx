@@ -41,7 +41,7 @@ class Grid:
 	Raises:
     	Nothing for now
 	"""
-	def addplayer(self, img):
+	def addplayer(self, player):
 #		repeated = True
 #		while repeated:
 #			repeated = False
@@ -55,4 +55,37 @@ class Grid:
 #					repeated = True
 		x = 0.5
 		y = 0.5
-		self.players.append([x, y, img])
+		self.players.append([x, y, player])
+		
+	"""
+	Funciton to remove a player
+	Args:
+    	targetid: the id of the player
+    	
+	Returns:
+    	None
+
+	Raises:
+    	Nothing for now
+	"""
+	def removeplayer(self, targetid):
+		for pl in self.players:
+			if pl[2].id == targetid:
+				self.players.remove(pl)
+						
+	"""
+	Funciton to update a player
+	Args:
+    	targetid: the id of the player
+    	
+	Returns:
+    	None
+
+	Raises:
+    	Nothing for now
+	"""
+	def updateplayer(self, targetid, xshift, yshift):
+		for i in range(len(self.players)):
+			if self.players[i][2].id == targetid:
+				self.players[i][2].xshift = xshift
+				self.players[i][2].yshift = yshift

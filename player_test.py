@@ -9,7 +9,7 @@ TEAM4 = 4
 TEAM5 = 5
 
 # IMAGES FOR ANIMATED WALKING
-
+# TEAM_ID, ORIENTATION, FRAME
 IMAGEPATH = [[[0 for k in xrange(4)] for j in xrange(4)] for i in xrange(6)]
 for i in range(6):
 	IMAGEPATH[i][0] = ['./sprites/team'+str(i)+'/t'+str(i)+'_f'+str(f)+'.png' for f in range(4)]
@@ -35,8 +35,12 @@ class Player:
 		self.img = None
 		self.coor = [0, 0, 0] # x,y coordinate and orientation
 		self.items = [0, 0, 0, 0, 0, 0, 0] #array of int, will always be length 7
-		self.movespeed = 0.25
-		self.counter = 0
+		self.present = 1
+		self.xshift = 0
+		self.yshift = 0
+#		self.movespeed = 0.25
+#		self.counter = 0
+		
 
 
 	"""
@@ -54,29 +58,29 @@ class Player:
 	def setup(self, player_data):
 		info = player_data.split(",")
 
-		print("Get info: ")
-		print(info)
+#		print("Get info: ")
+#		print(info)
 
 		self.id = int(info[0])
 
-		print("Created player " + str(self.id))
+#		print("Created player " + str(self.id))
 
 		self.team = int(info[1])
 
-		print(" at team " + str(self.team))
+#		print(" at team " + str(self.team))
 
 		for cor in range(3):
 			self.coor[cor] = int(info[cor + 2])
 
-		print(" at coor (" + str(self.coor[0]) + ", " + str(self.coor[1]) + ")")
-		print(" facing " + str(self.coor[2]))
+#		print(" at coor (" + str(self.coor[0]) + ", " + str(self.coor[1]) + ")")
+#		print(" facing " + str(self.coor[2]))
 
 		self.img = IMAGE[self.team][self.coor[2]-1]
 		for item in range(7):
 			self.items[item] = int(info[item + 5])
 
-		print("owning these items: ")
-		print(self.items)
+#		print("owning these items: ")
+#		print(self.items)
 
 	"""
 	Function to update a player, updates the player's info to new info(will have to cooperate with the graphics for moving and so on)
