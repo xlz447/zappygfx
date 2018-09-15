@@ -147,26 +147,25 @@ def main():
 						x_change = new_player.coor[0] - ALL_PLAYER[new_player.id].coor[0]
 						y_change = new_player.coor[1] - ALL_PLAYER[new_player.id].coor[1]
 						if x_change != 0:
-								print("walk x")
-								ALL_PLAYER[new_player.id].xshift = (0.25 * COUNTER * x_change / abs(x_change))
-								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
-								if COUNTER == 4:
-									ALL_PLAYER[new_player.id].xshift = 0
-									GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
-									ALL_PLAYER[new_player.id].coor[0] = new_player.coor[0]
-									GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
+							print("walk x")
+							ALL_PLAYER[new_player.id].xshift = (0.25 * COUNTER * x_change / abs(x_change))
+							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
+							if COUNTER == 4:
+								ALL_PLAYER[new_player.id].xshift = 0
+								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
+								ALL_PLAYER[new_player.id].coor[0] = new_player.coor[0]
+								GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
 							
 						if y_change != 0:
-							for j in range(1, 5):								
-								print("walk y")
-								ALL_PLAYER[new_player.id].yshift = (0.25 * j * y_change / abs(y_change))
-								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
-								blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
-								if COUNTER == 4:								
-									ALL_PLAYER[new_player.id].yshift = 0
-									GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
-									ALL_PLAYER[new_player.id].coor[1] = new_player.coor[1]
-									GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
+							print("walk y")
+							ALL_PLAYER[new_player.id].yshift = (0.25 * COUNTER * y_change / abs(y_change))
+							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
+							blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
+							if COUNTER == 4:								
+								ALL_PLAYER[new_player.id].yshift = 0
+								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
+								ALL_PLAYER[new_player.id].coor[1] = new_player.coor[1]
+								GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
 					else:
 						print("new player " + str(new_player.id))
 						ALL_PLAYER[new_player.id] = new_player
