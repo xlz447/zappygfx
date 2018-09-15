@@ -102,6 +102,7 @@ def main():
 			GET_FULL_DATA = False
 			sep = "@"
 			# to make sure we have the full data to run
+			# need to fix getting 1.5-ish data
 			while not GET_FULL_DATA:
 				data += s.recv(BUFFER_SIZE)
 				GET_FULL_DATA = sep in data.split("\n")
@@ -151,9 +152,9 @@ def main():
 						if x_change != 0:
 							print("walk x")
 							ALL_PLAYER[new_player.id].update(COUNTER)
-							ALL_PLAYER[new_player.id].xshift = (0.25 * COUNTER * x_change / abs(x_change))
+							ALL_PLAYER[new_player.id].xshift = (0.125 * COUNTER * x_change / abs(x_change))
 							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
-							if COUNTER == 4:
+							if COUNTER == 8:
 								ALL_PLAYER[new_player.id].xshift = 0
 								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
 								ALL_PLAYER[new_player.id].coor[0] = new_player.coor[0]
@@ -162,10 +163,10 @@ def main():
 						if y_change != 0:
 							print("walk y")
 							ALL_PLAYER[new_player.id].update(COUNTER)						
-							ALL_PLAYER[new_player.id].yshift = (0.25 * COUNTER * y_change / abs(y_change))
+							ALL_PLAYER[new_player.id].yshift = (0.125 * COUNTER * y_change / abs(y_change))
 							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
 							blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
-							if COUNTER == 4:								
+							if COUNTER == 8:								
 								ALL_PLAYER[new_player.id].yshift = 0
 								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
 								ALL_PLAYER[new_player.id].coor[1] = new_player.coor[1]
@@ -199,12 +200,12 @@ def main():
 			if event.type == pygame.QUIT:
 				GAMEOVER = True
 		COUNTER += 1
-		if COUNTER == 5:
+		if COUNTER == 9:
 			COUNTER = 1
 			
 		blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
 		pygame.display.flip()
-		pygame.time.delay(100)
+		pygame.time.delay(50)
 #		for row in range(NUM_ROW):
 #			for column in range(NUM_COL):
 #				DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
