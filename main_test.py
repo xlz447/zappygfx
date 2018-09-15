@@ -64,8 +64,8 @@ def blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS):
 					ycoor = int(row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1] + GRIDS[row][column].players[p][2].yshift * TILESIZE)
 					print("( " + str(xcoor) + ", " + str(ycoor) + ")")
 					ts = DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (xcoor, ycoor))
-					pygame.display.update(ts)
-					pygame.time.delay(100)
+	pygame.display.update(ts)
+	pygame.time.delay(100)
 	print("Done")
 #					DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0], row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1]))
 
