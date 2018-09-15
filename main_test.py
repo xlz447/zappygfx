@@ -54,18 +54,16 @@ ITEMS = {
 
 def blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS):
 	for row in range(NUM_ROW):
-			for column in range(NUM_COL):
-				DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
-				for i in range(7):
-					if GRIDS[row][column].items[i][2] is 1:
-						DISPLAYSURFACE.blit(ITEMS[i], (column*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][0], row*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][1]))
-				for p in range(len(GRIDS[row][column].players)):
-					xcoor = int(column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0] + GRIDS[row][column].players[p][2].xshift * TILESIZE)
-					ycoor = int(row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1] + GRIDS[row][column].players[p][2].yshift * TILESIZE)
-					print("( " + str(xcoor) + ", " + str(ycoor) + ")")
-					DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (xcoor, ycoor))
-	pygame.display.update()
-	pygame.time.delay(100)
+		for column in range(NUM_COL):
+			DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
+			for i in range(7):
+				if GRIDS[row][column].items[i][2] is 1:
+					DISPLAYSURFACE.blit(ITEMS[i], (column*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][0], row*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][1]))
+			for p in range(len(GRIDS[row][column].players)):
+				xcoor = int(column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0] + GRIDS[row][column].players[p][2].xshift * TILESIZE)
+				ycoor = int(row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1] + GRIDS[row][column].players[p][2].yshift * TILESIZE)
+				print("( " + str(xcoor) + ", " + str(ycoor) + ")")
+				DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (xcoor, ycoor))
 	print("Done")
 #					DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0], row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1]))
 
@@ -75,8 +73,6 @@ def main():
 	pygame.init()
 	pygame.display.set_caption('testing')
 	DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
-	clock = pygame.time.Clock()
-	clock.tick(1)
 	TCP_IP = '127.0.0.1'
 	TCP_PORT = 4242
 	BUFFER_SIZE = 2048 #map
@@ -97,23 +93,26 @@ def main():
 	GAMEOVER = False
 	ALL_PLAYER = {}
 	GRIDS = []
-	while GAMEOVER != True:		
-		data = ""
-		GET_FULL_DATA = False
-		sep = "@"
-		# to make sure we have the full data to run
-		while not GET_FULL_DATA:
-			data += s.recv(BUFFER_SIZE)
-			GET_FULL_DATA = sep in data.split("\n")
+	COUNTER = 1
+	while GAMEOVER != True:
+		if (COUNTER == 1):
+			data = ""
+			GET_FULL_DATA = False
+			sep = "@"
+			# to make sure we have the full data to run
+			while not GET_FULL_DATA:
+				data += s.recv(BUFFER_SIZE)
+				GET_FULL_DATA = sep in data.split("\n")
 
-		data_split = data.split("\n")
-		map_data = data_split[0].split(",")
-#		print (map_data)
+			data_split = data.split("\n")
+			map_data = data_split[0].split(",")
+			print (map_data)
 	#####################################setup the grid, only need to do this once, ################################
 	#####################################we can sent "im gfx" to server when first connect##########################
 	#####################################server will send back a grid size, only once, use special char#############
-		NUM_ROW = int(map_data.pop(0))
-		NUM_COL = int(map_data.pop(0))
+			NUM_ROW = int(map_data.pop(0))
+			NUM_COL = int(map_data.pop(0))
+
 
 		# setting up grids
 		if(GRIDS == []):
@@ -148,15 +147,14 @@ def main():
 						x_change = new_player.coor[0] - ALL_PLAYER[new_player.id].coor[0]
 						y_change = new_player.coor[1] - ALL_PLAYER[new_player.id].coor[1]
 						if x_change != 0:
-							for i in range(1, 5):
 								print("walk x")
-								ALL_PLAYER[new_player.id].xshift = (0.25 * i * x_change / abs(x_change))
+								ALL_PLAYER[new_player.id].xshift = (0.25 * COUNTER * x_change / abs(x_change))
 								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
-								blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
-							ALL_PLAYER[new_player.id].xshift = 0
-							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
-							ALL_PLAYER[new_player.id].coor[0] = new_player.coor[0]
-							GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
+								if COUNTER == 4:
+									ALL_PLAYER[new_player.id].xshift = 0
+									GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
+									ALL_PLAYER[new_player.id].coor[0] = new_player.coor[0]
+									GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
 							
 						if y_change != 0:
 							for j in range(1, 5):								
@@ -164,10 +162,11 @@ def main():
 								ALL_PLAYER[new_player.id].yshift = (0.25 * j * y_change / abs(y_change))
 								GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
 								blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
-							ALL_PLAYER[new_player.id].yshift = 0
-							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
-							ALL_PLAYER[new_player.id].coor[1] = new_player.coor[1]
-							GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
+								if COUNTER == 4:								
+									ALL_PLAYER[new_player.id].yshift = 0
+									GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
+									ALL_PLAYER[new_player.id].coor[1] = new_player.coor[1]
+									GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
 					else:
 						print("new player " + str(new_player.id))
 						ALL_PLAYER[new_player.id] = new_player
@@ -192,11 +191,15 @@ def main():
 
 	################################################################################################################
 		blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
+		pygame.display.flip()
+		
 		for event in pygame.event.get():
 			keys = pygame.key.get_pressed()
 			if event.type == pygame.QUIT:
 				GAMEOVER = True
-
+		COUNTER += 1
+		if COUNTER == 5:
+			COUNTER = 1
 #		for row in range(NUM_ROW):
 #			for column in range(NUM_COL):
 #				DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
