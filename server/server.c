@@ -171,7 +171,7 @@ int		main(int ac, char **av)
 				break;
 	}
 		printf("\nData sent:|%s|\n", data);
-		sleep(1);
+		usleep(1000000);
 	}
 	return (0);
 }
