@@ -148,6 +148,7 @@ def main():
 						y_change = new_player.coor[1] - ALL_PLAYER[new_player.id].coor[1]
 						if x_change != 0:
 							print("walk x")
+							ALL_PLAYER[new_player.id].update(COUNTER)
 							ALL_PLAYER[new_player.id].xshift = (0.25 * COUNTER * x_change / abs(x_change))
 							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
 							if COUNTER == 4:
@@ -158,6 +159,7 @@ def main():
 							
 						if y_change != 0:
 							print("walk y")
+							ALL_PLAYER[new_player.id].update(COUNTER)						
 							ALL_PLAYER[new_player.id].yshift = (0.25 * COUNTER * y_change / abs(y_change))
 							GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
 							blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
@@ -189,8 +191,6 @@ def main():
 #							pygame.display.update()
 
 	################################################################################################################
-		blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
-		pygame.display.flip()
 		
 		for event in pygame.event.get():
 			keys = pygame.key.get_pressed()
@@ -199,6 +199,10 @@ def main():
 		COUNTER += 1
 		if COUNTER == 5:
 			COUNTER = 1
+			
+		blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
+		pygame.display.flip()
+		pygame.time.delay(100)
 #		for row in range(NUM_ROW):
 #			for column in range(NUM_COL):
 #				DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
