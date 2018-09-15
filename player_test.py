@@ -95,4 +95,4 @@ class Player:
     	Nothing for now
 	"""
 	def update(self, cnt):
-		self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][(cnt - 1) % 4])
+		self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][cnt - 1])

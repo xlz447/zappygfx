@@ -59,6 +59,8 @@ def blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS):
 			for i in range(7):
 				if GRIDS[row][column].items[i][2] is 1:
 					DISPLAYSURFACE.blit(ITEMS[i], (column*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][0], row*TILESIZE + (TILESIZE - ITEMSIZE) * GRIDS[row][column].items[i][1]))
+	for row in range(NUM_ROW):
+		for column in range(NUM_COL):
 			for p in range(len(GRIDS[row][column].players)):
 				xcoor = int(column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0] + GRIDS[row][column].players[p][2].xshift * TILESIZE)
 				ycoor = int(row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1] + GRIDS[row][column].players[p][2].yshift * TILESIZE)
