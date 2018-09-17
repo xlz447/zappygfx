@@ -116,7 +116,6 @@ def main():
                         GRIDS[r].append(new_grid)
             else:
                 for r in range (NUM_ROW):
-                    GRIDS.append([])
                     for c in range (NUM_COL):
                         GRIDS[r][c].updateitem(int(map_data.pop(0)))
 #     ################################################################################################################
