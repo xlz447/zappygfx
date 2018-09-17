@@ -16,7 +16,7 @@ for i in range(6):
 	IMAGEPATH[i][1] = ['./sprites/team'+str(i)+'/t'+str(i)+'_l'+str(f)+'.png' for f in range(4)]
 	IMAGEPATH[i][2] = ['./sprites/team'+str(i)+'/t'+str(i)+'_r'+str(f)+'.png' for f in range(4)]
 	IMAGEPATH[i][3] = ['./sprites/team'+str(i)+'/t'+str(i)+'_b'+str(f)+'.png' for f in range(4)]
-pprint.pprint(IMAGEPATH)
+#pprint.pprint(IMAGEPATH)
 
 # 0 for f; 1 for l; 2 for r; 3 for b
 IMAGE = {
@@ -40,7 +40,7 @@ class Player:
 		self.yshift = 0
 #		self.movespeed = 0.25
 #		self.counter = 0
-		
+
 
 
 	"""

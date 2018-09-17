@@ -24,17 +24,21 @@ class Grid:
 	"""
 	def setup(self, img, items, players):
 		self.background = img
-		for i in range(6, -1, -1):
+		for i in range(0, 7):
 			self.items[i][2] = items % 2
 			items = items / 2
 		# set up players (do we still need this now??)
 		self.players = []
 
+	def updateitem(self, items):
+		for i in range(0, 7):
+			self.items[i][2] = items % 2
+			items = items / 2
 	"""
 	Funciton to add a player
 	Args:
     	img: the image used for this player(preloaded using pygames.image.load)
-    	
+
 	Returns:
     	None
 
@@ -56,12 +60,12 @@ class Grid:
 		x = 0.5
 		y = 0.5
 		self.players.append([x, y, player])
-		
+
 	"""
 	Funciton to remove a player
 	Args:
     	targetid: the id of the player
-    	
+
 	Returns:
     	None
 
@@ -72,12 +76,12 @@ class Grid:
 		for pl in self.players:
 			if pl[2].id == targetid:
 				self.players.remove(pl)
-						
+
 	"""
 	Funciton to update a player
 	Args:
     	targetid: the id of the player
-    	
+
 	Returns:
     	None
 
