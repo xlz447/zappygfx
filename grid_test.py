@@ -5,7 +5,7 @@ class Grid:
     def __init__(self):
         self.background = None
         self.items = [] #[{x0, y0, 0}, {x1, y1,1}, ...., {x6, y6,1}] # will always be length 7
-        self.players = [] #[x0, y0, image], [x1, y1, image],......] # might be empty
+        self.players = [] #[x0, y0, object], [x1, y1, object],......] # might be empty
         for i in range(0, 7):
             self.items.append([random.random(), random.random(), 0]) # set up the random xy coordinates and start with no item
 
@@ -51,17 +51,7 @@ class Grid:
         Nothing for now
     """
     def addplayer(self, player):
-#        repeated = True
-#        while repeated:
-#            repeated = False
-#            x = random.random()
-#            y = random.random()
-#            for it in self.items:
-#                if it[2] == 1 and it[0] - x < 0.05 and it[1] - y < 0.05:
-#                    repeated = True
-#            for pl in self.players:
-#                if pl[0] - x < 0.05 and pl[1] - y < 0.05:
-#                    repeated = True
+
         x = 0.5
         y = 0.5
         self.players.append([x, y, player])
@@ -93,8 +83,9 @@ class Grid:
     Raises:
         Nothing for now
     """
-    def updateplayer(self, targetid, xshift, yshift):
+    def updateplayer(self, targetid, xshift, yshift, playerimg):
         for i in range(len(self.players)):
             if self.players[i][2].id == targetid:
                 self.players[i][2].xshift = xshift
                 self.players[i][2].yshift = yshift
+                self.players[i][2].img = playerimg

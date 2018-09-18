@@ -56,7 +56,7 @@ def blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS):
             for p in range(len(GRIDS[row][column].players)):
                 xcoor = int(column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0] + GRIDS[row][column].players[p][2].xshift * TILESIZE)
                 ycoor = int(row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1] + GRIDS[row][column].players[p][2].yshift * TILESIZE)
-                print("( " + str(xcoor) + ", " + str(ycoor) + ")")
+                # print("( " + str(xcoor) + ", " + str(ycoor) + ")")
                 DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (xcoor, ycoor))
 #   DISPLAYSURFACE.blit((GRIDS[row][column].players[p][2]).img, (column*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][0], row*TILESIZE + (TILESIZE - PLAYERSIZE) * GRIDS[row][column].players[p][1]))
 
@@ -126,20 +126,22 @@ def main():
                 new_player.setup(data_split[i])
                 if not(new_player.id < 0):
                     if new_player.id in ALL_PLAYER:
-                        print("already has something")
-                        ALL_PLAYER[new_player.id].coor[2] = new_player.coor[2]
-                        print("now facing " + str(new_player.coor[2]))
+                        # print("already has something")
+                        if ALL_PLAYER[new_player.id].coor[2] != new_player.coor[2]:
+                            GRIDS[new_player.coor[1]][new_player.coor[0]].updateplayer(new_player.id, 0, 0, new_player.img)
+                            ALL_PLAYER[new_player.id].updatefacing(new_player.coor[2])
+                        # print("now facing " + str(new_player.coor[2]))
                         x_change = new_player.coor[0] - ALL_PLAYER[new_player.id].coor[0]
                         if x_change == NUM_COL-1 or x_change == (NUM_COL-1)*-1:
-                            x_change =  x_change / (-1 * (NUM_COL-1))
+                            x_change /= (-1 * (NUM_COL-1))
                         y_change = new_player.coor[1] - ALL_PLAYER[new_player.id].coor[1]
                         if y_change == NUM_ROW-1 or y_change == (NUM_ROW-1)*-1:
-                            y_change =  y_change / (-1 * (NUM_ROW-1))
+                            y_change /= (-1 * (NUM_ROW-1))
+                        ALL_PLAYER[new_player.id].update(COUNTER)
                         if x_change != 0:
-                            print("walk x")
-                            ALL_PLAYER[new_player.id].update(COUNTER)
-                            ALL_PLAYER[new_player.id].xshift = (0.25 * COUNTER * x_change / abs(x_change))
-                            GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
+                            # print("walk x")
+                            ALL_PLAYER[new_player.id].xshift = (COUNTER * x_change / abs(x_change) *.25)
+                            GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift, ALL_PLAYER[new_player.id].img)
                             if COUNTER == 4:
                                 ALL_PLAYER[new_player.id].xshift = 0
                                 GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
@@ -148,38 +150,20 @@ def main():
 
                         if y_change != 0:
                             print("walk y")
-                            ALL_PLAYER[new_player.id].update(COUNTER)
-                            ALL_PLAYER[new_player.id].yshift = (0.25 * COUNTER * y_change / abs(y_change))
-                            GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift)
+                            ALL_PLAYER[new_player.id].yshift = (COUNTER * y_change / abs(y_change) *.25)
+                            GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift, ALL_PLAYER[new_player.id].img)
                             if COUNTER == 4:
                                 ALL_PLAYER[new_player.id].yshift = 0
                                 GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].removeplayer(new_player.id)
                                 ALL_PLAYER[new_player.id].coor[1] = new_player.coor[1]
                                 GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
+
                         blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
                     else:
                         print("new player " + str(new_player.id))
                         ALL_PLAYER[new_player.id] = new_player
                         GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
         # here, need to check if the id exsist and not any more
-
-        #blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
-#                        while ALL_PLAYER[new_player.id].coor[0] != new_player.coor[0]:
-#                            if ALL_PLAYER[new_player.id].coor[0] < new_player.coor[0]:
-#                                ALL_PLAYER[new_player.id].coor[0] += ALL_PLAYER[new_player.id].movespeed
-#                            else:
-#                                ALL_PLAYER[new_player.id].coor[0] -= ALL_PLAYER[new_player.id].movespeed
-#                            ALL_PLAYER[new_player.id].counter = (ALL_PLAYER[new_player.id].counter + 1) % len(f_images)
-#                            DISPLAYSURFACE.blit(pygame.image.load(f_images[ALL_PLAYER[new_player.id].counter]),(ALL_PLAYER[new_player.id].coor[1], ALL_PLAYER[new_player.id].coor[0]))
-#                            pygame.display.update()
-#                        while ALL_PLAYER[new_player.id].coor[1] != new_player.coor[1]:
-#                            if ALL_PLAYER[new_player.id].coor[1] < new_player.coor[1]:
-#                                ALL_PLAYER[new_player.id].coor[1] += ALL_PLAYER[new_player.id].movespeed
-#                            else:
-#                                ALL_PLAYER[new_player.id].coor[1] -= ALL_PLAYER[new_player.id].movespeed
-#                            ALL_PLAYER[new_player.id].counter = (ALL_PLAYER[new_player.id].counter + 1) % len(f_images)
-#                            DISPLAYSURFACE.blit(pygame.image.load(f_images[ALL_PLAYER[new_player.id].counter]),(ALL_PLAYER[new_player.id].coor[1], ALL_PLAYER[new_player.id].coor[0]))
-#                            pygame.display.update()
 
     ################################################################################################################
 
@@ -188,7 +172,7 @@ def main():
             if event.type == pygame.QUIT:
                 GAMEOVER = True
         COUNTER += 1
-        if COUNTER == 5:
+        if COUNTER == 6:
             COUNTER = 1
 
         blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)

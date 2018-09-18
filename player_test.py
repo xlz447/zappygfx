@@ -74,9 +74,6 @@ class Player:
         for cor in range(3):
             self.coor[cor] = int(info[cor + 5])
 
-        # print(" at coor (" + str(self.coor[0]) + ", " + str(self.coor[1]) + ")")
-        # print(" facing " + str(self.coor[2]))
-
         self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][0])
         for item in range(7):
             self.items[item] = int(info[item + 8])
@@ -97,5 +94,7 @@ class Player:
         Nothing for now
     """
     def update(self, cnt):
-        print (IMAGEPATH[self.team][self.coor[2]][cnt - 1])
-        self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][cnt-1])
+        self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][(cnt-1)%4])
+
+    def updatefacing(self, facing):
+        self.coor[2] = facing
