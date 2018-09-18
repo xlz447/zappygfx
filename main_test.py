@@ -11,13 +11,14 @@ GRASSSTONE = 4
 PLASTER = 5
 SOIL = 6
 
-DERAUMERE = 0
+FOOD = 0
 LINEMATE = 1
-MENDIANE = 2
-PHIRAS = 3
-SIBUR = 4
-THYSTAME = 5
-FOOD = 6
+DERAUMERE = 2
+SIBUR = 3
+MENDIANE = 4
+PHIRAS = 5
+THYSTAME = 6
+
 
 TILESIZE = 120
 ITEMSIZE = 25
@@ -35,20 +36,13 @@ TEXTURES = {
 }
 
 ITEMS = {
-    FOOD:
-    pygame.transform.scale(pygame.image.load('./textures/item/food.png'), (ITEMSIZE, ITEMSIZE)),
-    LINEMATE:
-    pygame.transform.scale(pygame.image.load('./textures/item/linemate54.png'), (ITEMSIZE, ITEMSIZE)),
-    DERAUMERE:
-    pygame.transform.scale(pygame.image.load('./textures/item/deraumere54.png'), (ITEMSIZE, ITEMSIZE)),
-    SIBUR:
-    pygame.transform.scale(pygame.image.load('./textures/item/sibur54.png'), (ITEMSIZE, ITEMSIZE)),
-    MENDIANE:
-    pygame.transform.scale(pygame.image.load('./textures/item/mendiane54.png'), (ITEMSIZE, ITEMSIZE)),
-    PHIRAS:
-    pygame.transform.scale(pygame.image.load('./textures/item/phiras54.png'), (ITEMSIZE, ITEMSIZE)),
-    THYSTAME:
-    pygame.transform.scale(pygame.image.load('./textures/item/thystame54.png'), (ITEMSIZE, ITEMSIZE))
+    FOOD: pygame.transform.scale(pygame.image.load('./textures/item/food.png'), (ITEMSIZE, ITEMSIZE)),
+    LINEMATE: pygame.transform.scale(pygame.image.load('./textures/item/linemate54.png'), (ITEMSIZE, ITEMSIZE)),
+    DERAUMERE: pygame.transform.scale(pygame.image.load('./textures/item/deraumere54.png'), (ITEMSIZE, ITEMSIZE)),
+    SIBUR: pygame.transform.scale(pygame.image.load('./textures/item/sibur54.png'), (ITEMSIZE, ITEMSIZE)),
+    MENDIANE: pygame.transform.scale(pygame.image.load('./textures/item/mendiane54.png'), (ITEMSIZE, ITEMSIZE)),
+    PHIRAS: pygame.transform.scale(pygame.image.load('./textures/item/phiras54.png'), (ITEMSIZE, ITEMSIZE)),
+    THYSTAME: pygame.transform.scale(pygame.image.load('./textures/item/thystame54.png'), (ITEMSIZE, ITEMSIZE))
 }
 
 def blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS):
@@ -74,7 +68,7 @@ def main():
 
     TCP_IP = '127.0.0.1'
     TCP_PORT = 4242
-    BUFFER_SIZE = 8196
+    BUFFER_SIZE = 8192
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((TCP_IP, TCP_PORT))
@@ -82,10 +76,13 @@ def main():
     for x in range(BUFFER_SIZE - len("gfx")):
         data += '#'
     s.send(data)
+    data = s.recv(BUFFER_SIZE).split("@")[0].split(",")
+    NUM_COL = int(data[0])
+    NUM_ROW = int(data[1])
 
     pygame.init()
     pygame.display.set_caption('testing')
-    DISPLAYSURFACE = pygame.display.set_mode((10 * TILESIZE, 10 * TILESIZE))
+    DISPLAYSURFACE = pygame.display.set_mode((NUM_COL * TILESIZE, NUM_ROW * TILESIZE))
 
     GAMEOVER = False
     ALL_PLAYER = {}
@@ -100,10 +97,7 @@ def main():
                 GET_FULL_DATA = "@" in data
             p = data.replace("#", "")
             data_split = p.split("\n")
-            NUM_COL = int(data_split[0].split(",")[0])
-            NUM_ROW = int(data_split.pop(0).split(",")[1])
             map_data = data_split.pop(0).split(",")
-            print ("col= " + str(NUM_COL) + "  row= " + str(NUM_ROW))
             print ("map data= " + str(map_data))
             print ("data_split= " + str(data_split))
         # setting up grids
@@ -130,11 +124,11 @@ def main():
             ALL_PLAYER[py].present = 0
             ALL_PLAYER[py].xshift = 0
             ALL_PLAYER[py].yshift = 0
-
+        print("len size : " + str(len(data_split)))
         for i in range(1, len(data_split)):
             if not (data_split[i] == '' or data_split[i] == '@'):
                 new_player = Player()
-                new_player.setup(data_split[i])
+                new_player.setup(data_split.pop(0))
                 if not(new_player.id < 0):
                     if new_player.id in ALL_PLAYER:
                         print("already has something")
