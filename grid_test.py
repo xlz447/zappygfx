@@ -1,6 +1,7 @@
 import random
 
 class Grid:
+
     def __init__(self):
         self.background = None
         self.items = [] #[{x0, y0, 0}, {x1, y1,1}, ...., {x6, y6,1}] # will always be length 7
