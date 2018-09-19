@@ -21,7 +21,7 @@ THYSTAME = 6
 
 TILESIZE = 120
 ITEMSIZE = 25
-PLAYERSIZE = 80
+PLAYERSIZE = 60
 
 TEXTURES = {
     GRASS:
@@ -44,7 +44,17 @@ ITEMS = {
     THYSTAME: pygame.transform.scale(pygame.image.load('./textures/item/thystame54.png'), (ITEMSIZE, ITEMSIZE))
 }
 
+DEAD = pygame.transform.scale(pygame.image.load('./sprites/dead.png'), (45, 60))
+
+def still_connected(current_connected, id):
+    if current_connected:
+        for curr_id in current_connected:
+            if curr_id == id:
+                return True
+        return False
+
 def blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS):
+
     for row in range(NUM_ROW):
         for column in range(NUM_COL):
             DISPLAYSURFACE.blit(GRIDS[row][column].background, (column*TILESIZE, row*TILESIZE))
@@ -115,21 +125,26 @@ def main():
 #     #  maybe #3???? but for now, I am going to make it simple and easy...
 #
 #         # 1 grid 4 frame
-#         # make all players disappear first
         for py in ALL_PLAYER:
-            ALL_PLAYER[py].present = 0
             ALL_PLAYER[py].xshift = 0
             ALL_PLAYER[py].yshift = 0
+        current_connected = []
         for i in range(len(data_split)):
             if not (data_split[i] == '' or data_split[i] == '@'):
                 new_player = Player()
                 new_player.setup(data_split[i])
+                current_connected.append(new_player.id)
                 if not(new_player.id < 0):
-                    if new_player.id in ALL_PLAYER:
+                    if new_player.id in ALL_PLAYER and new_player.dead != 1 and new_player.left != 1:
                         # print("already has something")
+                        ALL_PLAYER[new_player.id].left = 0
                         if ALL_PLAYER[new_player.id].coor[2] != new_player.coor[2]:
                             GRIDS[new_player.coor[1]][new_player.coor[0]].updateplayer(new_player.id, 0, 0, new_player.img)
                             ALL_PLAYER[new_player.id].updatefacing(new_player.coor[2])
+                        if ALL_PLAYER[new_player.id].level != new_player.level:
+                            ALL_PLAYER[new_player.id].level = new_player.level
+                            ALL_PLAYER[new_player.id].update(COUNTER)
+                            GRIDS[new_player.coor[1]][new_player.coor[0]].updateplayer(new_player.id, 0, 0, new_player.img)
                         # print("now facing " + str(new_player.coor[2]))
                         x_change = new_player.coor[0] - ALL_PLAYER[new_player.id].coor[0]
                         if x_change == NUM_COL-1 or x_change == (NUM_COL-1)*-1:
@@ -149,7 +164,7 @@ def main():
                                 GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
 
                         if y_change != 0:
-                            print("walk y")
+                            # print("walk y")
                             ALL_PLAYER[new_player.id].yshift = (COUNTER * y_change / abs(y_change) *.25)
                             GRIDS[ALL_PLAYER[new_player.id].coor[1]][ALL_PLAYER[new_player.id].coor[0]].updateplayer(new_player.id, ALL_PLAYER[new_player.id].xshift, ALL_PLAYER[new_player.id].yshift, ALL_PLAYER[new_player.id].img)
                             if COUNTER == 4:
@@ -159,17 +174,25 @@ def main():
                                 GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
 
                         blitz_grid(NUM_ROW, NUM_COL, DISPLAYSURFACE, GRIDS)
+                    elif new_player.id in ALL_PLAYER and new_player.dead == 1:
+                        print("dead man")
+                        GRIDS[new_player.coor[1]][new_player.coor[0]].updateplayer(new_player.id, 0, 0, DEAD)
+
+                    elif new_player.id in ALL_PLAYER and new_player.left == 1:
+                        print("left")
+                        GRIDS[new_player.coor[1]][new_player.coor[0]].removeplayer(new_player.id)
                     else:
                         print("new player " + str(new_player.id))
                         ALL_PLAYER[new_player.id] = new_player
                         GRIDS[new_player.coor[1]][new_player.coor[0]].addplayer(new_player)
-        # here, need to check if the id exsist and not any more
-
     ################################################################################################################
+        for x in ALL_PLAYER.keys():
+            if not still_connected(current_connected, ALL_PLAYER[x].id):
+                GRIDS[ALL_PLAYER[x].coor[1]][ALL_PLAYER[x].coor[0]].removeplayer(ALL_PLAYER[x].id)
+                del ALL_PLAYER[x]
 
         for event in pygame.event.get():
-            keys = pygame.key.get_pressed()
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT :
                 GAMEOVER = True
         COUNTER += 1
         if COUNTER == 6:

@@ -1,5 +1,4 @@
 import random, pygame
-import pprint
 
 TEAM0 = 0
 TEAM1 = 1
@@ -32,13 +31,13 @@ class Player:
     def __init__(self):
         self.id = -1 # player id
         self.dead = -1
+        self.left = -1
         self.level = -1
         self.status = -1
         self.team  = -1 # team id
         self.img = None
         self.coor = [0, 0, 0] # x,y coordinate and orientation
         self.items = [0, 0, 0, 0, 0, 0, 0] #array of int, will always be length 7
-        self.present = 1
         self.xshift = 0
         self.yshift = 0
 #        self.movespeed = 0.25
@@ -65,18 +64,23 @@ class Player:
 
         self.dead = int(info[1])
 
-        self.level = int(info[2])
+        self.left = int(info[2])
 
-        self.status = int(info[3])
+        self.level = int(info[3])
 
-        self.team = int(info[4])
+        self.status = int(info[4])
+
+        self.team = int(info[5])
 
         for cor in range(3):
-            self.coor[cor] = int(info[cor + 5])
+            self.coor[cor] = int(info[cor + 6])
 
-        self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][0])
+        size1 = 45 + 8 * (self.level - 1)
+        size2 = 60 + 8 * (self.level - 1)
+        path = IMAGEPATH[self.team][self.coor[2]][0]
+        self.img = pygame.transform.scale(pygame.image.load(path), (size1, size2))
         for item in range(7):
-            self.items[item] = int(info[item + 8])
+            self.items[item] = int(info[item + 9])
 
         # print("owning these items: ")
         # print(self.items)
@@ -94,7 +98,11 @@ class Player:
         Nothing for now
     """
     def update(self, cnt):
-        self.img = pygame.image.load(IMAGEPATH[self.team][self.coor[2]][(cnt-1)%4])
+        size1 = 45 + 8 * (self.level - 1)
+        size2 = 60 + 8 * (self.level - 1)
+        path = IMAGEPATH[self.team][self.coor[2]][(cnt-1)%4]
+        self.img = pygame.transform.scale(pygame.image.load(path), (size1, size2))
 
     def updatefacing(self, facing):
         self.coor[2] = facing
+
