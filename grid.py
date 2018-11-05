@@ -1,69 +1,94 @@
-import pygame
+import random
 
-# TILES
-BRICK = 0
-BRICKMOSS = 1
-GRASS = 2
-GRASSFLOWER = 3
-GRASSSTONE = 4
-PLASTER = 5
-SOIL = 6
+class Grid:
 
-DERAUMERE = 0
-LINEMATE = 1
-MENDIANE = 2
-PHIRAS = 3
-SIBUR = 4
-THYSTAME = 5
-FOOD = 6
+    def __init__(self):
+        self.background = None
+        self.items = [] #[{x0, y0, 0}, {x1, y1,1}, ...., {x6, y6,1}] # will always be length 7
+        self.eggs = []
+        self.players = [] #[x0, y0, object], [x1, y1, object],......] # might be empty
+        for i in range(0, 7):
+            self.items.append([random.random(), random.random(), 0]) # set up the random xy coordinates and start with no item
 
-TEXTURES = {
-    BRICK: pygame.image.load('./textures/floor/brick2.jpg'),
-    BRICKMOSS: pygame.image.load('./textures/floor/brickmoss2.jpg'),
-    GRASS: pygame.image.load('./textures/floor/grass2.jpg'),
-    GRASSFLOWER: pygame.image.load('./textures/floor/grassflower2.jpg'),
-    GRASSSTONE: pygame.image.load('./textures/floor/grassstone2.jpg'),
-    PLASTER: pygame.image.load('./textures/floor/plaster2.jpg'),
-	SOIL: pygame.image.load('./textures/floor/soil2.jpg')
-}
 
-ITEMS = {
-	DERAUMERE:
-	pygame.image.load('./textures/item/deraumere54.png'),
-	LINEMATE:
-	pygame.image.load('./textures/item/linemate54.png'),
-	MENDIANE:
-	pygame.image.load('./textures/item/mendiane54.png'),
-	PHIRAS:
-	pygame.image.load('./textures/item/phiras54.png'),
-	SIBUR:
-	pygame.image.load('./textures/item/sibur54.png'),
-	THYSTAME:
-	pygame.image.load('./textures/item/thystame54.png'),
-	FOOD:
-	pygame.image.load('./textures/item/food54.png'),
-}
+    """
+    Funciton to setup a grid
+    Args:
+        img: the background image used for this grid(preloaded using pygames.image.load)
+        items: an int ranging from 0 to 127 representing the items that will apppear in this grid
+        player: data type TBD, (tuple?) contains information of the team and the orientation of all players on the grid
 
-GRID = [
-    [GRASS, GRASS, GRASS, GRASS, GRASS],
-	[GRASS, GRASS, GRASS, GRASS, GRASS],
-	[GRASS, GRASS, GRASS, GRASS, GRASS],
-	[GRASS, GRASS, GRASS, GRASS, GRASS],
-	[GRASS, GRASS, GRASS, GRASS, GRASS]
-]
+    Returns:
+        None
 
-ITEMGRID = [
-    [[0, 1, 2, 5], [], [1, 3, 4, 5], [], [0, 1, 2, 3, 4, 5]],
-	[[], [2, 3, 4, 5], [], [0, 3, 4, 5], []],
-	[[0, 1, 3, 5], [], [0, 2, 3, 5], [], [0, 1, 2, 3, 4, 5]],
-	[[], [1, 3, 4, 5], [], [2, 3, 4, 5], []],
-	[[3, 4, 5], [], [0, 1, 2], [], [0, 1, 2, 4]]
-]
-# GAME DIMENSIONS, CONFIG
-TILESIZE = 100
-MAPWIDTH = 5
-MAPHEIGHT = 5
-pygame.init()
-pygame.display.set_caption('testing')
+    Raises:
+        Nothing for now
+    """
+    def setup(self, img, item, players):
+        self.background = img
+        #print("setting up: " + str(bin(item)))
+        for i in range(6,-1,-1):
+            self.items[i][2] = item % 10
+            item = item // 10
+        # print(self.items)
+        # set up players (do we still need this now??)
+        self.players = []
 
-DISPLAYSURFACE = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
+    def updateitem(self, item):
+        #print("updating up: " + str(bin(item)))
+        for i in range(6,-1,-1):
+            self.items[i][2] = item % 10
+            item = item // 10
+        #print(self.items)
+    """
+    Funciton to add a player
+    Args:
+        img: the image used for this player(preloaded using pygames.image.load)
+
+    Returns:
+        None
+
+    Raises:
+        Nothing for now
+    """
+    def addplayer(self, player):
+
+        size1 = 45 + 8 * (player.level - 1)
+        size2 = 60 + 8 * (player.level - 1)
+        x = (120 - size1) / float(120)
+        y = (120 - size2) / float(120)
+        self.players.append([x, y, player])
+
+    """
+    Funciton to remove a player
+    Args:
+        targetid: the id of the player
+
+    Returns:
+        None
+
+    Raises:
+        Nothing for now
+    """
+    def removeplayer(self, targetid):
+        for pl in self.players:
+            if pl[2].id == targetid:
+                self.players.remove(pl)
+
+    """
+    Funciton to update a player
+    Args:
+        targetid: the id of the player
+
+    Returns:
+        None
+
+    Raises:
+        Nothing for now
+    """
+    def updateplayer(self, targetid, xshift, yshift, playerimg):
+        for i in range(len(self.players)):
+            if self.players[i][2].id == targetid:
+                self.players[i][2].xshift = xshift
+                self.players[i][2].yshift = yshift
+                self.players[i][2].img = playerimg
